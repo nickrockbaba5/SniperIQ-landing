@@ -1,0 +1,112 @@
+        {/* Footer */}
+        <footer className="border-t border-gray-900 bg-black">
+          <div className="max-w-7xl mx-auto px-6 py-12">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+              {/* Brand */}
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-9 h-9 bg-gradient-to-br from-gray-300 to-gray-500 rounded-xl p-[1px]">
+                    <div className="w-full h-full bg-black rounded-xl flex items-center justify-center">
+                      <Brain className="w-5 h-5 text-gray-300" />
+                    </div>
+                  </div>
+                  <span className="text-xl font-black">
+                    FIN<span className="text-gray-300">SCAN</span>
+                  </span>
+                </div>
+                <p className="text-sm text-gray-400">
+                  Institutional-grade financial analysis platform powered by AI.
+                </p>
+              </div>
+
+              {/* Product */}
+              <div>
+                <h3 className="font-semibold mb-3 text-sm uppercase tracking-wide text-white">
+                  Product
+                </h3>
+                <ul className="space-y-2 text-sm">
+                  <li>
+                    <a href="https://app.finscan.uk/dashboard" className="text-gray-400 hover:text-white transition-colors">
+                      Dashboard
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://app.finscan.uk/portfolio" className="text-gray-400 hover:text-white transition-colors">
+                      Portfolio
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://app.finscan.uk/research" className="text-gray-400 hover:text-white transition-colors">
+                      Research
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://app.finscan.uk/settings" className="text-gray-400 hover:text-white transition-colors">
+                      Settings
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Company */}
+              <div>
+                <h3 className="font-semibold mb-3 text-sm uppercase tracking-wide text-white">
+                  Company
+                </h3>
+                <ul className="space-y-2 text-sm">
+                  <li>
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                      About
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                      Blog
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                      Careers
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                      Contact
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Legal */}
+              <div>
+                <h3 className="font-semibold mb-3 text-sm uppercase tracking-wide text-white">
+                  Legal
+                </h3>
+                <ul className="space-y-2 text-sm">
+                  <li>
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                      Privacy
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                      Terms
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                      Security
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="pt-8 border-t border-gray-900">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+                <p>© {new Date().getFullYear()} FinScan. All rights reserved.</p>
+                <p>Institutional Intelligence Platform</p>
+              </div>
+            </div>
+          </div>
+        </footer>
