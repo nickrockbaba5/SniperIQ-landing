@@ -9,7 +9,7 @@ export default function LandingPage() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [liveStats, setLiveStats] = useState({
     analyses: 127543,
-    engines: 18,
+    engines: 9,
     accuracy: 94.2,
     uptime: 99.9
   });
@@ -158,7 +158,7 @@ export default function LandingPage() {
 
             {/* Subheadline - gray for readability */}
             <p className="text-2xl md:text-3xl text-gray-400 max-w-4xl mx-auto mb-14 leading-relaxed font-light">
-              Advanced AI research platform. <span className="text-gray-300 font-semibold">18 specialized engines.</span> Analyzing precious metals, currencies, and digital assets with <span className="text-white font-semibold">institutional-grade precision.</span>
+              Advanced AI research platform. <span className="text-gray-300 font-semibold">9 specialized engines.</span> Analyzing precious metals, currencies, and digital assets with <span className="text-white font-semibold">institutional-grade precision.</span>
             </p>
 
             {/* CTAs - Silver style */}
@@ -209,7 +209,7 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex flex-wrap items-center justify-center gap-10 text-sm text-gray-400">
               {[
-                { icon: Brain, text: '18 AI Analysis Engines' },
+                { icon: Brain, text: '9 AI Analysis Engines' },
                 { icon: Globe, text: 'Multi-Asset Coverage' },
                 { icon: Activity, text: '24/7 Global Monitoring' },
                 { icon: Shield, text: 'Institutional Grade' }
@@ -306,7 +306,7 @@ export default function LandingPage() {
 
               {[
                 { icon: Activity, title: 'Data Ingestion', desc: '20+ Global Sources' },
-                { icon: Brain, title: 'Multi-Engine', desc: '18 AI Models' },
+                { icon: Brain, title: 'Multi-Engine', desc: '9 AI Models' },
                 { icon: Zap, title: 'Regime Detection', desc: 'Market Phase ID' },
                 { icon: TrendingUp, title: 'Signals', desc: 'Actionable Insights' },
                 { icon: Shield, title: 'Risk Calibration', desc: 'Confidence Score' }
