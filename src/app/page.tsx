@@ -44,26 +44,27 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
-      {/* Premium Animated Background - Silver/Gray theme */}
+      {/* Premium Animated Background - Silver/Gray theme - Mobile Optimized */}
       <div className="fixed inset-0 z-0">
-        {/* Silver gradient orbs with mouse parallax */}
+        {/* Silver gradient orbs with mouse parallax - Reduced blur on mobile */}
         <div
           className="absolute inset-0 opacity-20"
           style={{
             transform: `translate(${mousePos.x}px, ${mousePos.y}px)`
           }}
         >
-          <div className="absolute top-[-10%] left-[10%] w-[600px] h-[600px] bg-gray-300/30 rounded-full blur-[150px] animate-pulse"
+          {/* Mobile: smaller orbs with less blur */}
+          <div className="absolute top-[-10%] left-[10%] w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-gray-300/30 rounded-full blur-[80px] md:blur-[150px] animate-pulse"
             style={{ animationDuration: '8s' }} />
-          <div className="absolute bottom-[-10%] right-[10%] w-[500px] h-[500px] bg-gray-400/20 rounded-full blur-[150px] animate-pulse"
+          <div className="absolute bottom-[-10%] right-[10%] w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-gray-400/20 rounded-full blur-[80px] md:blur-[150px] animate-pulse"
             style={{ animationDuration: '6s', animationDelay: '1s' }} />
-          <div className="absolute top-[40%] right-[20%] w-[400px] h-[400px] bg-gray-500/15 rounded-full blur-[150px] animate-pulse"
+          <div className="absolute top-[40%] right-[20%] w-[200px] h-[200px] md:w-[400px] md:h-[400px] bg-gray-500/15 rounded-full blur-[60px] md:blur-[150px] animate-pulse"
             style={{ animationDuration: '10s', animationDelay: '2s' }} />
         </div>
 
-        {/* Animated grid */}
+        {/* Animated grid - Disabled on mobile for performance */}
         <div
-          className="absolute inset-0 opacity-[0.02]"
+          className="hidden md:block absolute inset-0 opacity-[0.02]"
           style={{
             backgroundImage: 'linear-gradient(rgba(192, 192, 192, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(192, 192, 192, 0.5) 1px, transparent 1px)',
             backgroundSize: '60px 60px',
@@ -74,8 +75,8 @@ export default function LandingPage() {
         {/* Radial gradient overlay */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_0%,black_100%)]" />
 
-        {/* Noise texture */}
-        <div className="absolute inset-0 opacity-[0.015] mix-blend-overlay"
+        {/* Noise texture - Reduced opacity on mobile */}
+        <div className="absolute inset-0 opacity-[0.01] md:opacity-[0.015] mix-blend-overlay"
           style={{
             backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' /%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\' /%3E%3C/svg%3E")'
           }}
@@ -104,6 +105,7 @@ export default function LandingPage() {
                 <a href="#features" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Features</a>
                 <a href="#intelligence" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Intelligence</a>
                 <a href="#methodology" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Methodology</a>
+                <a href="#pricing" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Pricing</a>
               </nav>
 
               {/* CTA */}
@@ -146,8 +148,8 @@ export default function LandingPage() {
               </span>
             </div>
 
-            {/* Main headline - MASSIVE with readable gray */}
-            <h1 className="text-7xl md:text-8xl lg:text-9xl font-black mb-10 leading-[0.9] tracking-tight">
+            {/* Main headline - Mobile optimized */}
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-10 leading-[0.9] tracking-tight">
               <span className="block text-white">
                 Institutional
               </span>
@@ -156,8 +158,8 @@ export default function LandingPage() {
               </span>
             </h1>
 
-            {/* Subheadline - gray for readability */}
-            <p className="text-2xl md:text-3xl text-gray-400 max-w-4xl mx-auto mb-14 leading-relaxed font-light">
+            {/* Subheadline - Mobile optimized */}
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-400 max-w-4xl mx-auto mb-14 leading-relaxed font-light">
               Advanced AI research platform. <span className="text-gray-300 font-semibold">9 specialized engines.</span> Analyzing precious metals, currencies, and digital assets with <span className="text-white font-semibold">institutional-grade precision.</span>
             </p>
 
@@ -228,10 +230,10 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto">
             {/* Section header */}
             <div className="text-center mb-24">
-              <h2 className="text-6xl md:text-7xl font-black mb-6 tracking-tight text-white">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight text-white">
                 Built for Precision
               </h2>
-              <p className="text-xl text-gray-400 max-w-3xl mx-auto font-light">
+              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto font-light">
                 Institutional-grade infrastructure for professionals who demand more than surface-level insights.
               </p>
             </div>
@@ -292,10 +294,10 @@ export default function LandingPage() {
 
           <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-24">
-              <h2 className="text-6xl md:text-7xl font-black mb-6 tracking-tight text-white">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight text-white">
                 Intelligence Pipeline
               </h2>
-              <p className="text-xl text-gray-400 font-light">
+              <p className="text-base sm:text-lg md:text-xl text-gray-400 font-light">
                 Transparency in methodology. Confidence in results.
               </p>
             </div>
@@ -329,7 +331,7 @@ export default function LandingPage() {
         <section className="py-40 px-6">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-24">
-              <h2 className="text-6xl md:text-7xl font-black mb-6 tracking-tight text-white">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight text-white">
                 Performance Standards
               </h2>
             </div>
@@ -353,6 +355,228 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Pricing Section */}
+        <section id="pricing" className="py-40 px-6 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
+
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="text-center mb-24">
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.03] border border-gray-800 rounded-full mb-8 backdrop-blur-xl">
+                <span className="text-sm font-semibold text-gray-300">
+                  Simple, Transparent Pricing
+                </span>
+              </div>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight text-white">
+                Choose Your Plan
+              </h2>
+              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto font-light">
+                Professional-grade intelligence at prices that make sense. No hidden fees.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+              {/* Starter Tier */}
+              <div className="group relative p-8 bg-white/[0.02] backdrop-blur-xl border border-gray-800 rounded-3xl hover:bg-white/[0.05] hover:border-gray-600 transition-all duration-500 hover:scale-[1.03] hover:-translate-y-2">
+                <div className="mb-8">
+                  <h3 className="text-2xl font-black mb-2 text-white">Starter</h3>
+                  <p className="text-sm text-gray-400">For casual traders</p>
+                </div>
+
+                <div className="mb-8">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-5xl font-black text-gray-200">$29</span>
+                    <span className="text-gray-400">/month</span>
+                  </div>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-gray-300">5 symbol analyses per day</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-gray-300">Basic economic calendar</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-gray-300">Email support</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-gray-300">Core technical indicators</span>
+                  </li>
+                </ul>
+
+                <Link
+                  href="https://app.finscan.uk/register"
+                  className="block w-full py-4 bg-white/[0.05] hover:bg-white/[0.1] border border-gray-700 hover:border-gray-600 rounded-xl font-bold text-center transition-all duration-300"
+                >
+                  Get Started
+                </Link>
+              </div>
+
+              {/* Professional Tier - RECOMMENDED */}
+              <div className="group relative p-8 bg-gradient-to-br from-gray-500/10 via-white/[0.05] to-gray-500/10 backdrop-blur-xl border-2 border-gray-400 rounded-3xl hover:border-gray-300 transition-all duration-500 scale-105 hover:scale-110 shadow-2xl shadow-gray-500/20">
+                {/* Recommended badge */}
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-gray-300 to-gray-500 text-black text-xs font-black rounded-full uppercase tracking-wider">
+                  Most Popular
+                </div>
+
+                <div className="mb-8">
+                  <h3 className="text-2xl font-black mb-2 text-white">Professional</h3>
+                  <p className="text-sm text-gray-300">For active traders</p>
+                </div>
+
+                <div className="mb-8">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-5xl font-black text-white">$49</span>
+                    <span className="text-gray-300">/month</span>
+                  </div>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-white font-semibold">Unlimited analyses</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-white font-semibold">Full economic calendar</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-white font-semibold">News sentiment analysis</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-white font-semibold">Priority support</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-white font-semibold">All 9 AI engines</span>
+                  </li>
+                </ul>
+
+                <Link
+                  href="https://app.finscan.uk/register"
+                  className="block w-full py-4 bg-gradient-to-r from-gray-200 to-gray-400 hover:from-gray-100 hover:to-gray-300 text-black rounded-xl font-black text-center transition-all duration-300 shadow-lg shadow-gray-500/30"
+                >
+                  Start Free Trial
+                </Link>
+              </div>
+
+              {/* Institutional Tier */}
+              <div className="group relative p-8 bg-white/[0.02] backdrop-blur-xl border border-gray-800 rounded-3xl hover:bg-white/[0.05] hover:border-gray-600 transition-all duration-500 hover:scale-[1.03] hover:-translate-y-2">
+                <div className="mb-8">
+                  <h3 className="text-2xl font-black mb-2 text-white">Institutional</h3>
+                  <p className="text-sm text-gray-400">For trading firms</p>
+                </div>
+
+                <div className="mb-8">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-5xl font-black text-gray-200">$199</span>
+                    <span className="text-gray-400">/month</span>
+                  </div>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-gray-300">Everything in Professional</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-gray-300">API access</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-gray-300">Custom alerts</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-gray-300">Dedicated support</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-gray-300">White-label options</span>
+                  </li>
+                </ul>
+
+                <Link
+                  href="https://app.finscan.uk/register"
+                  className="block w-full py-4 bg-white/[0.05] hover:bg-white/[0.1] border border-gray-700 hover:border-gray-600 rounded-xl font-bold text-center transition-all duration-300"
+                >
+                  Contact Sales
+                </Link>
+              </div>
+            </div>
+
+            {/* Pricing FAQ/Note */}
+            <div className="mt-16 text-center">
+              <p className="text-sm text-gray-400">
+                All plans include 14-day free trial • No credit card required • Cancel anytime
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Final CTA */}
         <section className="py-40 px-6">
           <div className="max-w-5xl mx-auto">
@@ -363,11 +587,11 @@ export default function LandingPage() {
               <div className="relative z-10 text-center">
                 <Sparkles className="w-14 h-14 text-gray-300 mx-auto mb-8 group-hover:scale-110 transition-transform" />
 
-                <h2 className="text-5xl md:text-6xl font-black mb-8 tracking-tight text-white">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-8 tracking-tight text-white">
                   Begin Your Analysis
                 </h2>
 
-                <p className="text-2xl text-gray-400 mb-12 max-w-3xl mx-auto font-light">
+                <p className="text-lg sm:text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto font-light">
                   Access institutional-grade market intelligence. Professional tools for serious traders.
                 </p>
 
