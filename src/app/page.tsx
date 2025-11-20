@@ -108,11 +108,11 @@ export default function LandingPage() {
 
               {/* CTA */}
               <Link
-                href="https://app.finscan.uk"
+                href="https://app.finscan.uk/register"
                 className="group relative px-6 py-2.5 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-xl font-bold text-sm overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-gray-500/50"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative">Launch Platform</span>
+                <span className="relative">Get Started</span>
               </Link>
             </div>
           </div>
@@ -205,7 +205,7 @@ export default function LandingPage() {
         </section>
 
         {/* Trust bar - Silver */}
-        <section className="py-16 border-y border-gray-900 bg-white/[0.01] backdrop-blur-xl">
+        <section id="intelligence" className="py-16 border-y border-gray-900 bg-white/[0.01] backdrop-blur-xl">
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex flex-wrap items-center justify-center gap-10 text-sm text-gray-400">
               {[
