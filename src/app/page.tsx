@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
   Brain, Zap, TrendingUp, Shield, Activity, BarChart3, Globe, ArrowRight, Play,
   Sparkles, Cpu, Target, ChevronRight, Check, DollarSign, LineChart,
-  TrendingDown, Layers, FileText, MessageSquare, Lightbulb, Building2
+  TrendingDown, Layers, FileText, MessageSquare, Lightbulb, Building2, Clock
 } from 'lucide-react';
 
 export default function LandingPage() {
@@ -492,20 +492,79 @@ export default function LandingPage() {
 
             {/* Main demo video/screenshot */}
             <div className="mb-16">
-              <div className="relative aspect-video rounded-3xl overflow-hidden border border-gray-800 bg-gradient-to-br from-gray-900 via-black to-gray-900">
-                {/* Video placeholder */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-24 h-24 bg-gradient-to-br from-gray-300 to-gray-500 rounded-full flex items-center justify-center mx-auto mb-6 hover:scale-110 transition-transform cursor-pointer">
-                      <Play className="w-12 h-12 text-black ml-1" />
+              <div className="relative aspect-video rounded-3xl overflow-hidden border-2 border-gray-800 bg-gradient-to-br from-gray-900 via-black to-gray-900 group hover:border-gray-600 transition-all duration-500">
+                {/* Enhanced video placeholder with mock UI elements */}
+                <div className="absolute inset-0">
+                  {/* Animated grid background */}
+                  <div className="absolute inset-0 opacity-10" style={{
+                    backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+                    backgroundSize: '40px 40px'
+                  }}></div>
+
+                  {/* Floating mock chart elements in background */}
+                  <div className="absolute top-8 left-8 w-48 h-32 border border-gray-800 rounded-lg bg-black/40 backdrop-blur-sm p-3 opacity-60">
+                    <div className="flex gap-1 h-full items-end">
+                      {[30, 50, 40, 70, 55, 80, 60].map((h, i) => (
+                        <div key={i} className="flex-1 bg-gradient-to-t from-blue-500/40 to-purple-500/40 rounded-t" style={{height: `${h}%`}}></div>
+                      ))}
                     </div>
-                    <p className="text-2xl font-bold text-white mb-2">Watch Platform Demo</p>
-                    <p className="text-gray-400">5-minute walkthrough of all features</p>
+                  </div>
+
+                  <div className="absolute top-8 right-8 w-56 space-y-2 opacity-60">
+                    <div className="bg-black/40 backdrop-blur-sm border border-gray-800 rounded-lg p-3">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-gray-500 font-mono">ICT Structure</span>
+                        <span className="text-xs text-green-400 font-bold">BULLISH</span>
+                      </div>
+                      <div className="h-1 bg-gray-800 rounded-full overflow-hidden">
+                        <div className="h-full w-3/4 bg-gradient-to-r from-green-500 to-emerald-500"></div>
+                      </div>
+                    </div>
+                    <div className="bg-black/40 backdrop-blur-sm border border-gray-800 rounded-lg p-3">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-gray-500 font-mono">AI Confidence</span>
+                        <span className="text-xs text-blue-400 font-bold">94%</span>
+                      </div>
+                      <div className="h-1 bg-gray-800 rounded-full overflow-hidden">
+                        <div className="h-full w-[94%] bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Central play button */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center z-10">
+                      <div className="relative mb-6">
+                        {/* Pulsing glow effect */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-32 h-32 bg-gradient-to-br from-blue-500/30 to-purple-500/30 rounded-full blur-2xl animate-pulse"></div>
+                        </div>
+
+                        {/* Play button */}
+                        <div className="relative w-28 h-28 bg-gradient-to-br from-gray-200 to-gray-400 rounded-full flex items-center justify-center mx-auto shadow-2xl group-hover:scale-110 group-hover:from-white group-hover:to-gray-300 transition-all duration-300 cursor-pointer">
+                          <Play className="w-14 h-14 text-black ml-2" />
+                        </div>
+                      </div>
+
+                      <p className="text-3xl font-black text-white mb-3">Watch Platform Demo</p>
+                      <p className="text-lg text-gray-400 mb-4">5-minute walkthrough of all features</p>
+
+                      <div className="flex items-center justify-center gap-6 text-sm">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                          <span className="text-gray-500">1080p HD</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-gray-500" />
+                          <span className="text-gray-500">5:24</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
                 {/* Gradient overlay for depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 pointer-events-none" />
               </div>
             </div>
 
@@ -532,13 +591,67 @@ export default function LandingPage() {
                 }
               ].map((item, i) => (
                 <div key={i} className="group cursor-pointer">
-                  <div className={`relative aspect-video rounded-2xl overflow-hidden border border-gray-800 bg-gradient-to-br ${item.gradient} hover:border-gray-600 transition-all duration-500`}>
-                    {/* Screenshot placeholder */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <item.icon className="w-16 h-16 text-gray-600 group-hover:scale-110 transition-transform" />
-                    </div>
-                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                      <p className="text-sm font-bold text-white">{item.title}</p>
+                  <div className={`relative aspect-video rounded-2xl overflow-hidden border border-gray-800 bg-gradient-to-br ${item.gradient} hover:border-gray-600 transition-all duration-500 hover:scale-[1.02]`}>
+                    {/* Enhanced screenshot placeholder with mock UI */}
+                    <div className="absolute inset-0 p-4 flex flex-col">
+                      {/* Mock terminal header */}
+                      <div className="flex items-center gap-2 mb-3 pb-2 border-b border-white/10">
+                        <div className="flex gap-1.5">
+                          <div className="w-2 h-2 rounded-full bg-red-500/40"></div>
+                          <div className="w-2 h-2 rounded-full bg-yellow-500/40"></div>
+                          <div className="w-2 h-2 rounded-full bg-green-500/40"></div>
+                        </div>
+                        <div className="flex-1 text-center">
+                          <div className="text-xs font-mono text-gray-500">{item.title}</div>
+                        </div>
+                      </div>
+
+                      {/* Mock content area */}
+                      <div className="flex-1 flex items-center justify-center relative">
+                        {/* Background grid pattern */}
+                        <div className="absolute inset-0 opacity-20" style={{
+                          backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
+                          backgroundSize: '20px 20px'
+                        }}></div>
+
+                        {/* Icon with glow effect */}
+                        <div className="relative">
+                          <div className="absolute inset-0 blur-xl opacity-50">
+                            <item.icon className="w-20 h-20 text-white" />
+                          </div>
+                          <item.icon className="w-20 h-20 text-gray-400 group-hover:text-gray-300 group-hover:scale-110 transition-all relative z-10" />
+                        </div>
+
+                        {/* Mock data bars/charts */}
+                        {i === 0 && (
+                          <div className="absolute bottom-4 left-4 right-4 flex items-end gap-1">
+                            {[40, 65, 45, 80, 55, 90, 70, 85].map((h, idx) => (
+                              <div key={idx} className="flex-1 bg-blue-500/20 border border-blue-500/30 rounded-t" style={{height: `${h}%`}}></div>
+                            ))}
+                          </div>
+                        )}
+
+                        {i === 1 && (
+                          <div className="absolute top-4 left-4 right-4 space-y-2">
+                            {[100, 80, 65, 50].map((w, idx) => (
+                              <div key={idx} className="h-2 bg-emerald-500/20 border border-emerald-500/30 rounded-full" style={{width: `${w}%`}}></div>
+                            ))}
+                          </div>
+                        )}
+
+                        {i === 2 && (
+                          <div className="absolute top-4 left-4 right-4 space-y-2 text-xs font-mono">
+                            <div className="h-2 w-full bg-amber-500/20 rounded"></div>
+                            <div className="h-2 w-4/5 bg-amber-500/15 rounded"></div>
+                            <div className="h-2 w-3/4 bg-amber-500/10 rounded"></div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Title overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+                        <p className="text-sm font-bold text-white">{item.title}</p>
+                      </div>
                     </div>
                   </div>
                   <p className="mt-3 text-sm text-gray-400 text-center">{item.desc}</p>
