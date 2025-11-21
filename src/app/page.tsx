@@ -165,7 +165,7 @@ export default function LandingPage() {
 
             {/* Subheadline - Mobile optimized */}
             <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-400 max-w-5xl mx-auto mb-14 leading-relaxed font-light">
-              One platform powered by <span className="text-white font-semibold">9 AI engines</span>, FMP fundamentals, and <span className="text-gray-300 font-semibold">real-time liquidity intelligence</span>.
+              One platform powered by <span className="text-white font-semibold">9 AI engines</span>, comprehensive fundamentals, and <span className="text-gray-300 font-semibold">real-time liquidity intelligence</span>.
             </p>
 
             {/* CTAs - Silver style */}
@@ -291,7 +291,7 @@ export default function LandingPage() {
                   </div>
                   <div>
                     <h3 className="text-4xl font-black text-white mb-2">Company Fundamentals Terminal</h3>
-                    <p className="text-gray-400">Fiscal.ai-level fundamental analysis with global FMP coverage</p>
+                    <p className="text-gray-400">Institutional-grade fundamental analysis with global market coverage</p>
                   </div>
                 </div>
 
@@ -313,7 +313,7 @@ export default function LandingPage() {
                     { icon: Shield, title: 'Ownership Analysis', desc: 'Institutional holders, insider trades' },
                     { icon: Globe, title: 'ETF Exposure', desc: 'Which funds hold this stock' },
                     { icon: DollarSign, title: 'Fair Value AI', desc: 'DCF valuation with AI adjustments' },
-                    { icon: Activity, title: 'Global Coverage', desc: '30,000+ companies via FMP API' }
+                    { icon: Activity, title: 'Global Coverage', desc: '30,000+ companies worldwide' }
                   ].map((feature, i) => (
                     <div key={i} className="p-4 bg-white/[0.02] border border-gray-800 rounded-xl hover:bg-white/[0.04] transition-all">
                       <feature.icon className="w-5 h-5 text-emerald-400 mb-3" />
@@ -691,7 +691,7 @@ export default function LandingPage() {
                 { icon: Globe, title: 'UK-Based', desc: 'Headquartered in the UK with full FCA compliance. Research platform designed for global professional traders.' },
                 { icon: Brain, title: 'AI-First Fintech', desc: '9 specialized AI engines working in parallel. Multi-engine architecture for maximum accuracy and confidence.' },
                 { icon: Shield, title: 'Institutional-Grade', desc: 'Built to standards used by trading firms. Enterprise reliability (99.9% uptime), real-time processing (<100ms latency).' },
-                { icon: Building2, title: 'Global Coverage', desc: 'Multi-asset support (equities, forex, metals, crypto). 30,000+ companies, 20+ data sources, worldwide market coverage.' }
+                { icon: Building2, title: 'Global Coverage', desc: 'Multi-asset support (equities, forex, metals, crypto). 30,000+ companies, institutional-grade data, worldwide market coverage.' }
               ].map((item, i) => (
                 <div key={i} className="p-8 bg-white/[0.02] border border-gray-800 rounded-3xl hover:bg-white/[0.05] hover:border-gray-600 transition-all duration-500">
                   <div className="w-12 h-12 bg-gradient-to-br from-gray-300 to-gray-500 rounded-xl flex items-center justify-center mb-6">
