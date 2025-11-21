@@ -230,7 +230,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased"><ThemeProviderWrapper>{children}</ThemeProviderWrapper></body>
     </html>
   );
 }
