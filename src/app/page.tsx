@@ -2,14 +2,18 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Brain, Zap, TrendingUp, Shield, Activity, BarChart3, Globe, ArrowRight, Play, Sparkles, Cpu, Target } from 'lucide-react';
+import {
+  Brain, Zap, TrendingUp, Shield, Activity, BarChart3, Globe, ArrowRight, Play,
+  Sparkles, Cpu, Target, ChevronRight, Check, DollarSign, LineChart,
+  TrendingDown, Layers, FileText, MessageSquare, Lightbulb, Building2
+} from 'lucide-react';
 
 export default function LandingPage() {
   const [scrollY, setScrollY] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [liveStats, setLiveStats] = useState({
     analyses: 127543,
-    engines: 9,
+    engines: 18, // Updated from 9 to 18
     accuracy: 94.2,
     uptime: 99.9
   });
@@ -103,8 +107,8 @@ export default function LandingPage() {
               {/* Nav */}
               <nav className="hidden md:flex items-center gap-8">
                 <a href="#features" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Features</a>
-                <a href="#intelligence" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Intelligence</a>
-                <a href="#methodology" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Methodology</a>
+                <a href="#modules" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Platform</a>
+                <a href="#comparison" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Compare</a>
                 <a href="#pricing" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Pricing</a>
               </nav>
 
@@ -114,13 +118,13 @@ export default function LandingPage() {
                 className="group relative px-6 py-2.5 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-xl font-bold text-sm overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-gray-500/50"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative">Get Started</span>
+                <span className="relative">Launch Terminal</span>
               </Link>
             </div>
           </div>
         </header>
 
-        {/* HERO - Full screen impact */}
+        {/* ENHANCED HERO - Full screen with terminal preview */}
         <section className="min-h-screen flex items-center justify-center px-6 pt-20 relative">
           {/* Floating particles - silver */}
           {[...Array(20)].map((_, i) => (
@@ -144,23 +148,24 @@ export default function LandingPage() {
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-300"></span>
               </div>
               <span className="text-sm font-semibold text-gray-300">
-                Powering Professional Traders Worldwide
+                UK-Based • Institutional Grade • Live at api.finscan.uk
               </span>
             </div>
 
             {/* Main headline - Mobile optimized */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-10 leading-[0.9] tracking-tight">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-6 leading-[0.9] tracking-tight">
               <span className="block text-white">
-                Institutional
-              </span>
-              <span className="block text-gray-300">
-                Intelligence
+                FinScan Terminal
               </span>
             </h1>
 
+            <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-10 text-gray-300 tracking-tight">
+              Institutional Trading + Fundamentals + AI Copilot
+            </p>
+
             {/* Subheadline - Mobile optimized */}
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-400 max-w-4xl mx-auto mb-14 leading-relaxed font-light">
-              Advanced AI research platform. <span className="text-gray-300 font-semibold">9 specialized engines.</span> Analyzing precious metals, currencies, and digital assets with <span className="text-white font-semibold">institutional-grade precision.</span>
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-400 max-w-5xl mx-auto mb-14 leading-relaxed font-light">
+              One platform powered by <span className="text-white font-semibold">18 AI engines</span>, FMP fundamentals, and <span className="text-gray-300 font-semibold">real-time liquidity intelligence</span>.
             </p>
 
             {/* CTAs - Silver style */}
@@ -170,7 +175,7 @@ export default function LandingPage() {
                 className="group relative px-10 py-5 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-2xl font-bold text-xl overflow-hidden transition-all duration-500 hover:scale-110 hover:shadow-[0_0_80px_rgba(192,192,192,0.6)] flex items-center gap-3"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative">Get Started Free</span>
+                <span className="relative">Launch Terminal</span>
                 <ArrowRight className="w-6 h-6 relative group-hover:translate-x-2 transition-transform duration-300" />
               </Link>
 
@@ -187,7 +192,7 @@ export default function LandingPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
               {[
                 { value: liveStats.analyses.toLocaleString(), label: 'Analyses Generated', icon: Activity },
-                { value: liveStats.engines, label: 'AI Engines', icon: Cpu },
+                { value: `${liveStats.engines} AI`, label: 'Engines Active', icon: Cpu },
                 { value: `${liveStats.accuracy}%`, label: 'Model Accuracy', icon: Target },
                 { value: `${liveStats.uptime}%`, label: 'Uptime SLA', icon: Shield }
               ].map((stat, i) => (
@@ -206,151 +211,299 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Trust bar - Silver */}
-        <section id="intelligence" className="py-16 border-y border-gray-900 bg-white/[0.01] backdrop-blur-xl">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="flex flex-wrap items-center justify-center gap-10 text-sm text-gray-400">
-              {[
-                { icon: Brain, text: '9 AI Analysis Engines' },
-                { icon: Globe, text: 'Multi-Asset Coverage' },
-                { icon: Activity, text: '24/7 Global Monitoring' },
-                { icon: Shield, text: 'Institutional Grade' }
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 group">
-                  <item.icon className="w-5 h-5 text-gray-300 group-hover:scale-110 transition-transform" />
-                  <span className="font-medium group-hover:text-white transition-colors">{item.text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Features - Premium cards */}
-        <section id="features" className="py-40 px-6">
-          <div className="max-w-7xl mx-auto">
-            {/* Section header */}
-            <div className="text-center mb-24">
-              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight text-white">
-                Built for Precision
-              </h2>
-              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto font-light">
-                Institutional-grade infrastructure for professionals who demand more than surface-level insights.
-              </p>
-            </div>
-
-            {/* Feature grid */}
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                {
-                  icon: Brain,
-                  title: 'Multi-Engine Analysis',
-                  desc: 'Consensus-driven intelligence from 9 specialized engines analyzing regime detection, flow dynamics, correlation patterns, and market microstructure across global markets.',
-                  tags: ['Regime Detection', 'Flow Analytics', 'Correlation']
-                },
-                {
-                  icon: BarChart3,
-                  title: 'Cross-Asset Intelligence',
-                  desc: 'Unified view across precious metals, foreign exchange, and digital assets. Identify regime shifts and structural breaks before they cascade.',
-                  tags: ['Metals', 'Forex', 'Crypto']
-                },
-                {
-                  icon: Shield,
-                  title: 'Institutional Methodology',
-                  desc: 'Research-grade analysis combining quantitative signals, order flow analytics, and behavioral finance. Every insight includes confidence scoring.',
-                  tags: ['Quant Signals', 'Risk Metrics']
-                }
-              ].map((feature, i) => (
-                <div key={i} className="group relative p-8 bg-white/[0.02] backdrop-blur-xl border border-gray-800 rounded-3xl hover:bg-white/[0.05] hover:border-gray-600 transition-all duration-500 hover:scale-[1.03] hover:-translate-y-2">
-                  {/* Icon */}
-                  <div className="relative w-14 h-14 bg-gradient-to-br from-gray-300 to-gray-500 rounded-2xl p-[1px] mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-gray-500/30">
-                    <div className="w-full h-full bg-black rounded-2xl flex items-center justify-center">
-                      <feature.icon className="w-7 h-7 text-gray-300" />
-                    </div>
-                  </div>
-
-                  <h3 className="text-2xl font-black mb-4 tracking-tight text-white">{feature.title}</h3>
-                  <p className="text-gray-400 leading-relaxed mb-6 font-light">{feature.desc}</p>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2">
-                    {feature.tags.map((tag, j) => (
-                      <span key={j} className="px-3 py-1.5 bg-white/[0.05] border border-gray-800 rounded-full text-xs text-gray-300 font-medium">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Hover glow */}
-                  <div className="absolute inset-0 rounded-3xl bg-gray-400/0 group-hover:bg-gray-400/10 transition-opacity duration-500 -z-10 blur-2xl" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Intelligence Pipeline */}
-        <section id="methodology" className="py-40 px-6 relative">
+        {/* THREE HERO MODULES SECTION */}
+        <section id="modules" className="py-40 px-6 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.01] to-transparent" />
 
           <div className="max-w-7xl mx-auto relative z-10">
+            {/* Section header */}
             <div className="text-center mb-24">
               <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight text-white">
-                Intelligence Pipeline
+                Three Platforms. One Terminal.
               </h2>
-              <p className="text-base sm:text-lg md:text-xl text-gray-400 font-light">
-                Transparency in methodology. Confidence in results.
+              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto font-light">
+                Everything you need for institutional-grade analysis in a single interface.
               </p>
             </div>
 
-            <div className="relative grid md:grid-cols-5 gap-6">
-              {/* Connecting line */}
-              <div className="hidden md:block absolute top-1/2 left-[10%] right-[10%] h-[2px] bg-gradient-to-r from-gray-700 via-gray-500 to-gray-700 -translate-y-1/2 z-0" />
-
-              {[
-                { icon: Activity, title: 'Data Ingestion', desc: '20+ Global Sources' },
-                { icon: Brain, title: 'Multi-Engine', desc: '9 AI Models' },
-                { icon: Zap, title: 'Regime Detection', desc: 'Market Phase ID' },
-                { icon: TrendingUp, title: 'Signals', desc: 'Actionable Insights' },
-                { icon: Shield, title: 'Risk Calibration', desc: 'Confidence Score' }
-              ].map((step, i) => (
-                <div key={i} className="relative z-10 group">
-                  <div className="p-8 bg-black border border-gray-800 rounded-2xl hover:border-gray-600 transition-all duration-500 hover:scale-105">
-                    <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center mb-5 mx-auto group-hover:scale-110 transition-transform group-hover:bg-gray-700">
-                      <step.icon className="w-6 h-6 text-gray-300" />
-                    </div>
-                    <h3 className="text-sm font-bold mb-2 text-center tracking-tight text-white">{step.title}</h3>
-                    <p className="text-xs text-gray-500 text-center">{step.desc}</p>
+            {/* Module 1: Institutional Trade Intelligence */}
+            <div className="mb-32 group">
+              <div className="p-12 bg-gradient-to-br from-white/[0.05] via-white/[0.02] to-white/[0.05] border border-gray-800 rounded-[3rem] backdrop-blur-2xl hover:border-gray-600 transition-all duration-500">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center">
+                    <TrendingUp className="w-8 h-8 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-4xl font-black text-white mb-2">Institutional Trade Intelligence</h3>
+                    <p className="text-gray-400">The world's first retail-accessible institutional trading engine</p>
                   </div>
                 </div>
-              ))}
+
+                {/* Screenshot placeholder */}
+                <div className="mb-8 h-80 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl border border-gray-800 flex items-center justify-center">
+                  <div className="text-center">
+                    <LineChart className="w-20 h-20 text-gray-600 mx-auto mb-4" />
+                    <p className="text-gray-500 text-lg">Terminal Screenshot Here</p>
+                    <p className="text-gray-600 text-sm">ICT Structure + Gamma + Liquidity Maps</p>
+                  </div>
+                </div>
+
+                {/* Features grid */}
+                <div className="grid md:grid-cols-3 gap-6">
+                  {[
+                    { icon: Target, title: 'Smart Money (ICT)', desc: 'Order blocks, FVG, liquidity pools' },
+                    { icon: Layers, title: 'Gamma Exposure', desc: 'Options gamma walls & dealer hedging' },
+                    { icon: Activity, title: 'Liquidity Map', desc: 'Stop-loss clusters & sweep zones' },
+                    { icon: BarChart3, title: 'Volume Footprint', desc: 'Delta analysis & absorption' },
+                    { icon: Zap, title: 'Scenario Engine', desc: 'Multi-path probability modeling' },
+                    { icon: Brain, title: 'ML Regime Detection', desc: 'Market phase classification' },
+                    { icon: Globe, title: 'Macro Filter', desc: 'FRED data & central bank policy' }
+                  ].map((feature, i) => (
+                    <div key={i} className="p-4 bg-white/[0.02] border border-gray-800 rounded-xl hover:bg-white/[0.04] transition-all">
+                      <feature.icon className="w-5 h-5 text-blue-400 mb-3" />
+                      <h4 className="text-sm font-bold text-white mb-1">{feature.title}</h4>
+                      <p className="text-xs text-gray-500">{feature.desc}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Badges */}
+                <div className="flex flex-wrap gap-3 mt-8">
+                  <span className="px-4 py-2 bg-blue-500/10 border border-blue-500/30 rounded-full text-sm text-blue-300 font-medium">
+                    Sniper Master
+                  </span>
+                  <span className="px-4 py-2 bg-purple-500/10 border border-purple-500/30 rounded-full text-sm text-purple-300 font-medium">
+                    FusionBrain
+                  </span>
+                  <span className="px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full text-sm text-green-300 font-medium">
+                    Multi-Timeframe
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Module 2: Company Fundamentals Terminal */}
+            <div className="mb-32 group">
+              <div className="p-12 bg-gradient-to-br from-white/[0.05] via-white/[0.02] to-white/[0.05] border border-gray-800 rounded-[3rem] backdrop-blur-2xl hover:border-gray-600 transition-all duration-500">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center">
+                    <Building2 className="w-8 h-8 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-4xl font-black text-white mb-2">Company Fundamentals Terminal</h3>
+                    <p className="text-gray-400">Fiscal.ai-level fundamental analysis with global FMP coverage</p>
+                  </div>
+                </div>
+
+                {/* Screenshot placeholder */}
+                <div className="mb-8 h-80 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl border border-gray-800 flex items-center justify-center">
+                  <div className="text-center">
+                    <FileText className="w-20 h-20 text-gray-600 mx-auto mb-4" />
+                    <p className="text-gray-500 text-lg">Fundamentals Page Screenshot</p>
+                    <p className="text-gray-600 text-sm">Financial Statements + Key Metrics + Ratios</p>
+                  </div>
+                </div>
+
+                {/* Features grid */}
+                <div className="grid md:grid-cols-3 gap-6">
+                  {[
+                    { icon: FileText, title: 'Financial Statements', desc: 'Income, Balance Sheet, Cash Flow (10 years)' },
+                    { icon: BarChart3, title: 'Ratios & Key Metrics', desc: 'P/E, ROE, Debt ratios, margins, growth' },
+                    { icon: TrendingUp, title: 'Earnings & Surprises', desc: 'Historical EPS, estimates, beat/miss' },
+                    { icon: Shield, title: 'Ownership Analysis', desc: 'Institutional holders, insider trades' },
+                    { icon: Globe, title: 'ETF Exposure', desc: 'Which funds hold this stock' },
+                    { icon: DollarSign, title: 'Fair Value AI', desc: 'DCF valuation with AI adjustments' },
+                    { icon: Activity, title: 'Global Coverage', desc: '30,000+ companies via FMP API' }
+                  ].map((feature, i) => (
+                    <div key={i} className="p-4 bg-white/[0.02] border border-gray-800 rounded-xl hover:bg-white/[0.04] transition-all">
+                      <feature.icon className="w-5 h-5 text-emerald-400 mb-3" />
+                      <h4 className="text-sm font-bold text-white mb-1">{feature.title}</h4>
+                      <p className="text-xs text-gray-500">{feature.desc}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Compare tag */}
+                <div className="flex items-center gap-3 mt-8 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl">
+                  <Check className="w-5 h-5 text-emerald-400" />
+                  <p className="text-sm text-emerald-300 font-medium">
+                    <span className="font-bold">Quant + Fundamentals + AI</span> — comparable to Fiscal.ai, but integrated with trading intelligence
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Module 3: AI Research Copilot */}
+            <div className="group">
+              <div className="p-12 bg-gradient-to-br from-white/[0.05] via-white/[0.02] to-white/[0.05] border border-gray-800 rounded-[3rem] backdrop-blur-2xl hover:border-gray-600 transition-all duration-500">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl flex items-center justify-center">
+                    <MessageSquare className="w-8 h-8 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-4xl font-black text-white mb-2">AI Research Copilot</h3>
+                    <p className="text-gray-400">Ask anything. Get institutional-grade answers.</p>
+                  </div>
+                </div>
+
+                {/* Screenshot placeholder */}
+                <div className="mb-8 h-80 bg-gradient-to-br from-amber-500/10 to-orange-500/10 rounded-2xl border border-gray-800 flex items-center justify-center">
+                  <div className="text-center">
+                    <MessageSquare className="w-20 h-20 text-gray-600 mx-auto mb-4" />
+                    <p className="text-gray-500 text-lg">AI Chat Interface Screenshot</p>
+                    <p className="text-gray-600 text-sm">Research Engine + Context-Aware Analysis</p>
+                  </div>
+                </div>
+
+                {/* Features grid */}
+                <div className="grid md:grid-cols-3 gap-6">
+                  {[
+                    { icon: Lightbulb, title: 'Generate Research Instantly', desc: 'Full reports with charts & data' },
+                    { icon: FileText, title: 'Explain Fundamentals', desc: 'Break down financial statements' },
+                    { icon: Target, title: 'Explain Liquidity Traps', desc: 'ICT concepts in plain language' },
+                    { icon: TrendingUp, title: 'Compare Companies', desc: 'Side-by-side fundamental analysis' },
+                    { icon: Zap, title: 'Generate Trade Setups', desc: 'Entry/exit with risk parameters' },
+                    { icon: Globe, title: 'Explain Macro Regime', desc: 'Central bank policy & correlations' },
+                    { icon: Shield, title: 'Automatic Risk Filters', desc: 'FCA-compliant disclaimers' }
+                  ].map((feature, i) => (
+                    <div key={i} className="p-4 bg-white/[0.02] border border-gray-800 rounded-xl hover:bg-white/[0.04] transition-all">
+                      <feature.icon className="w-5 h-5 text-amber-400 mb-3" />
+                      <h4 className="text-sm font-bold text-white mb-1">{feature.title}</h4>
+                      <p className="text-xs text-gray-500">{feature.desc}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Powered by */}
+                <div className="flex items-center gap-3 mt-8 p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl">
+                  <Brain className="w-5 h-5 text-amber-400" />
+                  <p className="text-sm text-amber-300 font-medium">
+                    Powered by GPT-4 + unified research context from ML, macro, fundamentals & scenarios
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Performance Metrics */}
-        <section className="py-40 px-6">
+        {/* COMPARISON TABLE SECTION */}
+        <section id="comparison" className="py-40 px-6 relative">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-24">
               <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight text-white">
-                Performance Standards
+                How FinScan Compares
+              </h2>
+              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto font-light">
+                The only platform combining institutional trading intelligence, fundamentals, and AI in one terminal.
+              </p>
+            </div>
+
+            {/* Comparison table */}
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b-2 border-gray-800">
+                    <th className="text-left p-6 text-gray-400 font-bold uppercase tracking-wide text-sm">Feature</th>
+                    <th className="text-center p-6 text-white font-black text-lg">FinScan</th>
+                    <th className="text-center p-6 text-gray-400 font-medium text-sm">TradingView</th>
+                    <th className="text-center p-6 text-gray-400 font-medium text-sm">Fiscal.ai</th>
+                    <th className="text-center p-6 text-gray-400 font-medium text-sm">AlphaResearch</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { feature: 'Sniper Engine (ICT)', finscan: true, tv: false, fiscal: false, alpha: false },
+                    { feature: 'ICT + Liquidity Maps', finscan: true, tv: false, fiscal: false, alpha: false },
+                    { feature: 'Gamma + Open Interest', finscan: true, tv: false, fiscal: false, alpha: false },
+                    { feature: 'Financial Statements', finscan: true, tv: false, fiscal: true, alpha: true },
+                    { feature: 'Ratios & Key Metrics', finscan: true, tv: false, fiscal: true, alpha: true },
+                    { feature: 'AI Copilot (GPT-4)', finscan: true, tv: false, fiscal: true, alpha: true },
+                    { feature: 'Macro Regime Detection', finscan: true, tv: false, fiscal: false, alpha: false },
+                    { feature: 'Unified Terminal (All-in-One)', finscan: true, tv: false, fiscal: false, alpha: false },
+                    { feature: '18 AI Engines', finscan: true, tv: false, fiscal: false, alpha: false },
+                    { feature: 'Multi-Timeframe Analysis', finscan: true, tv: 'partial', fiscal: false, alpha: false }
+                  ].map((row, i) => (
+                    <tr key={i} className="border-b border-gray-900 hover:bg-white/[0.02] transition-colors">
+                      <td className="p-6 text-gray-300 font-medium">{row.feature}</td>
+                      <td className="p-6 text-center">
+                        {row.finscan === true && <Check className="w-6 h-6 text-green-400 mx-auto" />}
+                        {row.finscan === false && <span className="text-gray-700">—</span>}
+                        {row.finscan === 'partial' && <span className="text-amber-400 text-sm">Partial</span>}
+                      </td>
+                      <td className="p-6 text-center">
+                        {row.tv === true && <Check className="w-6 h-6 text-gray-600 mx-auto" />}
+                        {row.tv === false && <span className="text-gray-700">—</span>}
+                        {row.tv === 'partial' && <span className="text-gray-600 text-sm">Partial</span>}
+                      </td>
+                      <td className="p-6 text-center">
+                        {row.fiscal === true && <Check className="w-6 h-6 text-gray-600 mx-auto" />}
+                        {row.fiscal === false && <span className="text-gray-700">—</span>}
+                      </td>
+                      <td className="p-6 text-center">
+                        {row.alpha === true && <Check className="w-6 h-6 text-gray-600 mx-auto" />}
+                        {row.alpha === false && <span className="text-gray-700">—</span>}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Endorsement callout */}
+            <div className="mt-16 p-8 bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/30 rounded-3xl">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-600 rounded-2xl flex items-center justify-center">
+                    <Sparkles className="w-8 h-8 text-white" />
+                  </div>
+                </div>
+                <div className="flex-1 text-center md:text-left">
+                  <h3 className="text-2xl font-black text-white mb-2">The Unified Institutional Terminal</h3>
+                  <p className="text-gray-400">
+                    FinScan is the <span className="text-white font-semibold">only platform</span> that combines institutional trading intelligence (ICT, gamma, liquidity),
+                    company fundamentals (Fiscal.ai-level), and AI research copilot in a single, integrated terminal.
+                    Stop switching between 5 different tools.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Endorsement narrative */}
+        <section className="py-40 px-6">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 tracking-tight text-white">
+                Built for Professionals
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-2 gap-8">
               {[
-                { value: '94%+', label: 'Model Accuracy', sub: 'Backtested performance' },
-                { value: '<100ms', label: 'Signal Latency', sub: 'Real-time processing' },
-                { value: '99.9%', label: 'Uptime SLA', sub: 'Enterprise reliability' },
-                { value: '20+', label: 'Data Sources', sub: 'Global coverage' }
-              ].map((metric, i) => (
-                <div key={i} className="group p-10 bg-white/[0.02] backdrop-blur-xl border border-gray-800 rounded-3xl text-center hover:bg-white/[0.05] hover:border-gray-600 transition-all duration-500 hover:scale-105">
-                  <div className="text-6xl font-black text-gray-200 mb-4 group-hover:scale-110 transition-transform">
-                    {metric.value}
+                { icon: Globe, title: 'UK-Based', desc: 'Headquartered in the UK with full FCA compliance. Research platform designed for global professional traders.' },
+                { icon: Brain, title: 'AI-First Fintech', desc: '18 specialized AI engines working in parallel. Multi-engine architecture for maximum accuracy and confidence.' },
+                { icon: Shield, title: 'Institutional-Grade', desc: 'Built to standards used by trading firms. Enterprise reliability (99.9% uptime), real-time processing (<100ms latency).' },
+                { icon: Building2, title: 'Global Coverage', desc: 'Multi-asset support (equities, forex, metals, crypto). 30,000+ companies, 20+ data sources, worldwide market coverage.' }
+              ].map((item, i) => (
+                <div key={i} className="p-8 bg-white/[0.02] border border-gray-800 rounded-3xl hover:bg-white/[0.05] hover:border-gray-600 transition-all duration-500">
+                  <div className="w-12 h-12 bg-gradient-to-br from-gray-300 to-gray-500 rounded-xl flex items-center justify-center mb-6">
+                    <item.icon className="w-6 h-6 text-black" />
                   </div>
-                  <div className="text-lg font-bold mb-2 tracking-tight text-white">{metric.label}</div>
-                  <div className="text-sm text-gray-500">{metric.sub}</div>
+                  <h3 className="text-2xl font-black text-white mb-4">{item.title}</h3>
+                  <p className="text-gray-400 leading-relaxed">{item.desc}</p>
                 </div>
               ))}
+            </div>
+
+            {/* Innovation statement */}
+            <div className="mt-16 text-center p-12 bg-gradient-to-br from-white/[0.05] via-white/[0.02] to-white/[0.05] border border-gray-800 rounded-[3rem] backdrop-blur-2xl">
+              <Lightbulb className="w-12 h-12 text-amber-400 mx-auto mb-6" />
+              <h3 className="text-3xl font-black text-white mb-4">Innovation at the Core</h3>
+              <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+                We're not just another chart platform. FinScan is a <span className="text-white font-semibold">complete institutional research terminal</span> designed
+                from the ground up to give retail traders the same edge that hedge funds and prop firms have been using for years.
+              </p>
             </div>
           </div>
         </section>
@@ -379,48 +532,32 @@ export default function LandingPage() {
               <div className="group relative p-8 bg-white/[0.02] backdrop-blur-xl border border-gray-800 rounded-3xl hover:bg-white/[0.05] hover:border-gray-600 transition-all duration-500 hover:scale-[1.03] hover:-translate-y-2">
                 <div className="mb-8">
                   <h3 className="text-2xl font-black mb-2 text-white">Starter</h3>
-                  <p className="text-sm text-gray-400">For casual traders</p>
+                  <p className="text-sm text-gray-400">For individual analysts</p>
                 </div>
 
                 <div className="mb-8">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-black text-gray-200">$29</span>
+                    <span className="text-5xl font-black text-gray-200">£49</span>
                     <span className="text-gray-400">/month</span>
                   </div>
                 </div>
 
                 <ul className="space-y-4 mb-8">
                   <li className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-sm text-gray-300">5 symbol analyses per day</span>
+                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">5 analyses per day</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-sm text-gray-300">Basic economic calendar</span>
+                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">Basic fundamentals</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
+                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm text-gray-300">AI copilot (limited)</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
                     <span className="text-sm text-gray-300">Email support</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-sm text-gray-300">Core technical indicators</span>
                   </li>
                 </ul>
 
@@ -441,56 +578,36 @@ export default function LandingPage() {
 
                 <div className="mb-8">
                   <h3 className="text-2xl font-black mb-2 text-white">Professional</h3>
-                  <p className="text-sm text-gray-300">For active traders</p>
+                  <p className="text-sm text-gray-300">For research teams</p>
                 </div>
 
                 <div className="mb-8">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-black text-white">$49</span>
+                    <span className="text-5xl font-black text-white">£149</span>
                     <span className="text-gray-300">/month</span>
                   </div>
                 </div>
 
                 <ul className="space-y-4 mb-8">
                   <li className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
+                    <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                     <span className="text-sm text-white font-semibold">Unlimited analyses</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-sm text-white font-semibold">Full economic calendar</span>
+                    <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm text-white font-semibold">All 18 AI engines</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-sm text-white font-semibold">News sentiment analysis</span>
+                    <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm text-white font-semibold">Full fundamentals access</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
+                    <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm text-white font-semibold">AI copilot (unlimited)</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                     <span className="text-sm text-white font-semibold">Priority support</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-sm text-white font-semibold">All 9 AI engines</span>
                   </li>
                 </ul>
 
@@ -502,59 +619,39 @@ export default function LandingPage() {
                 </Link>
               </div>
 
-              {/* Institutional Tier */}
+              {/* Enterprise Tier */}
               <div className="group relative p-8 bg-white/[0.02] backdrop-blur-xl border border-gray-800 rounded-3xl hover:bg-white/[0.05] hover:border-gray-600 transition-all duration-500 hover:scale-[1.03] hover:-translate-y-2">
                 <div className="mb-8">
-                  <h3 className="text-2xl font-black mb-2 text-white">Institutional</h3>
-                  <p className="text-sm text-gray-400">For trading firms</p>
+                  <h3 className="text-2xl font-black mb-2 text-white">Enterprise</h3>
+                  <p className="text-sm text-gray-400">For institutions</p>
                 </div>
 
                 <div className="mb-8">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-black text-gray-200">$199</span>
+                    <span className="text-5xl font-black text-gray-200">£299</span>
                     <span className="text-gray-400">/month</span>
                   </div>
                 </div>
 
                 <ul className="space-y-4 mb-8">
                   <li className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
+                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
                     <span className="text-sm text-gray-300">Everything in Professional</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
+                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
                     <span className="text-sm text-gray-300">API access</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
+                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
                     <span className="text-sm text-gray-300">Custom alerts</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
+                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
                     <span className="text-sm text-gray-300">Dedicated support</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
+                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
                     <span className="text-sm text-gray-300">White-label options</span>
                   </li>
                 </ul>
@@ -588,22 +685,22 @@ export default function LandingPage() {
                 <Sparkles className="w-14 h-14 text-gray-300 mx-auto mb-8 group-hover:scale-110 transition-transform" />
 
                 <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-8 tracking-tight text-white">
-                  Begin Your Analysis
+                  Ready to Trade Like an Institution?
                 </h2>
 
                 <p className="text-lg sm:text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto font-light">
-                  Access institutional-grade market intelligence. Professional tools for serious traders.
+                  Join professional traders using FinScan Terminal for institutional-grade intelligence.
                 </p>
 
                 <Link
                   href="https://app.finscan.uk/register"
                   className="group inline-flex items-center gap-3 px-12 py-6 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-2xl font-bold text-xl transition-all duration-500 hover:scale-110 hover:shadow-[0_0_100px_rgba(192,192,192,0.6)]"
                 >
-                  <span>Get Started Free</span>
+                  <span>Launch Terminal</span>
                   <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
                 </Link>
 
-                <p className="text-sm text-gray-500 mt-6 font-light">No credit card required</p>
+                <p className="text-sm text-gray-500 mt-6 font-light">14-day free trial • No credit card required</p>
               </div>
             </div>
           </div>
@@ -626,7 +723,7 @@ export default function LandingPage() {
                   </span>
                 </div>
                 <p className="text-sm text-gray-400">
-                  Institutional-grade financial analysis platform powered by AI.
+                  Institutional-grade financial analysis platform powered by 18 AI engines.
                 </p>
               </div>
 
@@ -716,7 +813,7 @@ export default function LandingPage() {
             <div className="pt-8 border-t border-gray-900">
               <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
                 <p>© {new Date().getFullYear()} FinScan. All rights reserved.</p>
-                <p>Institutional Intelligence Platform</p>
+                <p>UK-Based • Institutional Intelligence Platform • api.finscan.uk</p>
               </div>
             </div>
           </div>
