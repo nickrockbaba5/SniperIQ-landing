@@ -5,8 +5,9 @@ import Link from 'next/link';
 import {
   Brain, Zap, TrendingUp, Shield, Activity, BarChart3, Globe, ArrowRight, Play,
   Sparkles, Cpu, Target, ChevronRight, Check, DollarSign, LineChart,
-  TrendingDown, Layers, FileText, MessageSquare, Lightbulb, Building2, Clock
+  TrendingDown, Layers, FileText, MessageSquare, Lightbulb, Building2, Clock, Loader2
 } from 'lucide-react';
+import { redirectToCheckout, type TierName } from '../lib/stripe';
 
 export default function LandingPage() {
   const [scrollY, setScrollY] = useState(0);
@@ -17,6 +18,11 @@ export default function LandingPage() {
     accuracy: 94.2,
     uptime: 99.9
   });
+
+  // Pricing state
+  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
+  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -45,6 +51,86 @@ export default function LandingPage() {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
+  // Pricing tiers configuration
+  const pricingTiers = [
+    {
+      name: 'free' as TierName,
+      displayName: 'Free',
+      price: { monthly: 0, yearly: 0 },
+      description: 'Get started free',
+      features: ['3 analyses/day', '5 AI queries/day', '0 exports/month', '3 basic engines', 'Basic fundamentals', 'Delayed data'],
+      cta: 'Get Started',
+      ctaLink: 'https://app.sniperiq.ai/register',
+      popular: false,
+    },
+    {
+      name: 'starter' as TierName,
+      displayName: 'Starter',
+      price: { monthly: 39, yearly: 390 },
+      description: 'Essential trading intelligence',
+      features: ['10 analyses/day', '20 AI queries/day', '10 exports/month', '3 basic engines', 'Basic fundamentals', 'Delayed data'],
+      cta: 'Start Free Trial',
+      popular: false,
+    },
+    {
+      name: 'pro' as TierName,
+      displayName: 'Pro',
+      price: { monthly: 99, yearly: 990 },
+      description: 'Professional trading suite',
+      features: ['50 analyses/day', '100 AI queries/day', '50 exports/month', 'All 12 AI engines', 'Full fundamentals', 'Real-time data'],
+      cta: 'Start Free Trial',
+      popular: true,
+    },
+    {
+      name: 'advanced' as TierName,
+      displayName: 'Advanced',
+      price: { monthly: 199, yearly: 1990 },
+      description: 'Institutional-grade intelligence',
+      features: ['200 analyses/day', '500 AI queries/day', '200 exports/month', 'All 12 AI engines', 'Premium fundamentals', 'Real-time data + API access'],
+      cta: 'Start Free Trial',
+      popular: false,
+    },
+    {
+      name: 'enterprise' as TierName,
+      displayName: 'Enterprise',
+      price: { monthly: 0, yearly: 0 },
+      description: 'Custom enterprise solutions',
+      features: ['Unlimited analyses', 'Unlimited AI queries', 'Unlimited exports', 'All 12 AI engines', 'Premium fundamentals', 'Real-time data', 'Dedicated support', 'White-label options'],
+      cta: 'Contact Sales',
+      ctaLink: 'mailto:enterprise@sniperiq.ai?subject=SniperIQ%20Enterprise%20Plan',
+      popular: false,
+    },
+  ];
+
+  // Handle Stripe checkout
+  const handleSelectTier = async (tierName: TierName) => {
+    if (tierName === 'free') {
+      window.location.href = 'https://app.sniperiq.ai/register';
+      return;
+    }
+
+    if (tierName === 'enterprise') {
+      window.location.href = 'mailto:enterprise@sniperiq.ai?subject=SniperIQ%20Enterprise%20Plan';
+      return;
+    }
+
+    setCheckoutLoading(tierName);
+    setCheckoutError(null);
+
+    try {
+      await redirectToCheckout(tierName, billingCycle);
+    } catch (error) {
+      console.error('Checkout error:', error);
+      setCheckoutError(error instanceof Error ? error.message : 'Failed to start checkout');
+      // Fallback to registration page
+      setTimeout(() => {
+        window.location.href = 'https://app.sniperiq.ai/register';
+      }, 2000);
+    } finally {
+      setCheckoutLoading(null);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
@@ -100,7 +186,7 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <span className="text-xl font-black tracking-tight">
-                  FIN<span className="text-gray-300">SCAN</span>
+                  SNIPER<span className="text-gray-300">IQ</span>
                 </span>
               </div>
 
@@ -115,7 +201,7 @@ export default function LandingPage() {
 
               {/* CTA */}
               <Link
-                href="https://app.finscan.uk/register"
+                href="https://app.sniperiq.ai/register"
                 className="group relative px-6 py-2.5 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-xl font-bold text-sm overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-gray-500/50"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -171,7 +257,7 @@ export default function LandingPage() {
             {/* Main headline - Mobile first */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 leading-tight tracking-tight">
               <span className="block text-white">
-                FinScan Terminal
+                SniperIQ Terminal
               </span>
             </h1>
 
@@ -187,7 +273,7 @@ export default function LandingPage() {
             {/* CTAs - Mobile optimized */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 mb-16">
               <Link
-                href="https://app.finscan.uk/register"
+                href="https://app.sniperiq.ai/register"
                 className="group relative px-8 py-4 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-xl font-bold text-lg overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(192,192,192,0.5)] flex items-center gap-2"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -402,12 +488,179 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* ENHANCED PRICING SECTION with Stripe Integration */}
+        <section id="pricing" className="py-24 sm:py-32 lg:py-40 px-4 sm:px-6 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
+
+          <div className="max-w-7xl mx-auto relative z-10">
+            {/* Header */}
+            <div className="text-center mb-8 sm:mb-12">
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.03] border border-gray-800 rounded-full mb-6 backdrop-blur-xl">
+                <span className="text-sm font-semibold text-gray-300">
+                  Simple, Transparent Pricing
+                </span>
+              </div>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 tracking-tight text-white">
+                Choose Your Plan
+              </h2>
+              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto font-light">
+                Institutional-grade trading intelligence at every level. Choose the plan that fits your workflow.
+              </p>
+            </div>
+
+            {/* Billing Toggle */}
+            <div className="flex items-center justify-center gap-4 mb-10 sm:mb-12">
+              <span className={`text-sm sm:text-base ${billingCycle === 'monthly' ? 'text-white font-semibold' : 'text-gray-500'}`}>
+                Monthly
+              </span>
+              <button
+                onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'yearly' : 'monthly')}
+                className="relative w-14 h-7 sm:w-16 sm:h-8 rounded-full bg-gray-700 transition-colors hover:bg-gray-600"
+                aria-label="Toggle billing cycle"
+              >
+                <div
+                  className={`absolute top-1 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-r from-gray-200 to-gray-400 transition-transform ${
+                    billingCycle === 'yearly' ? 'translate-x-8 sm:translate-x-9' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+              <span className={`text-sm sm:text-base ${billingCycle === 'yearly' ? 'text-white font-semibold' : 'text-gray-500'}`}>
+                Yearly
+                <span className="ml-2 px-2 py-0.5 sm:px-2.5 sm:py-1 text-xs bg-emerald-500/20 text-emerald-400 rounded-full font-bold">
+                  Save 17%
+                </span>
+              </span>
+            </div>
+
+            {/* Checkout Error */}
+            {checkoutError && (
+              <div className="max-w-md mx-auto mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm text-center animate-pulse">
+                {checkoutError}
+              </div>
+            )}
+
+            {/* Pricing Cards Grid */}
+            <div className="grid gap-6 lg:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-5 max-w-7xl mx-auto">
+              {pricingTiers.map((tier) => {
+                const price = billingCycle === 'yearly' && tier.price.yearly > 0
+                  ? (tier.price.yearly / 12).toFixed(0)
+                  : tier.price.monthly;
+                const isLoading = checkoutLoading === tier.name;
+                const isPro = tier.popular;
+
+                return (
+                  <div
+                    key={tier.name}
+                    className={`group relative p-6 sm:p-7 backdrop-blur-xl rounded-3xl transition-all duration-500 ${
+                      isPro
+                        ? 'bg-gradient-to-br from-gray-500/10 via-white/[0.05] to-gray-500/10 border-2 border-gray-400 hover:border-gray-300 scale-[1.02] hover:scale-105 shadow-2xl shadow-gray-500/20'
+                        : 'bg-white/[0.02] border border-gray-800 hover:bg-white/[0.05] hover:border-gray-600'
+                    }`}
+                  >
+                    {/* Most Popular Badge */}
+                    {isPro && (
+                      <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-gray-300 to-gray-500 text-black text-xs font-black rounded-full uppercase tracking-wider">
+                        Most Popular
+                      </div>
+                    )}
+
+                    {/* Tier Header */}
+                    <div className="mb-6">
+                      <h3 className={`text-xl sm:text-2xl font-black mb-1 ${isPro ? 'text-white' : 'text-white'}`}>
+                        {tier.displayName}
+                      </h3>
+                      <p className={`text-xs sm:text-sm ${isPro ? 'text-gray-300' : 'text-gray-400'}`}>
+                        {tier.description}
+                      </p>
+                    </div>
+
+                    {/* Price */}
+                    <div className="mb-6">
+                      {tier.name === 'enterprise' ? (
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-3xl sm:text-4xl font-black text-gray-200">Custom</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-baseline gap-2">
+                          <span className={`text-4xl sm:text-5xl font-black ${isPro ? 'text-white' : 'text-gray-200'}`}>
+                            £{price}
+                          </span>
+                          <span className={`text-sm ${isPro ? 'text-gray-300' : 'text-gray-400'}`}>
+                            {billingCycle === 'yearly' && tier.price.yearly > 0 ? '/mo (billed yearly)' : '/month'}
+                          </span>
+                        </div>
+                      )}
+                      {billingCycle === 'yearly' && tier.price.yearly > 0 && tier.name !== 'free' && (
+                        <p className="text-xs text-emerald-400 mt-1">
+                          £{tier.price.yearly}/year - Save £{(tier.price.monthly * 12 - tier.price.yearly)}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Features */}
+                    <ul className="space-y-3 mb-6 text-sm">
+                      {tier.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <Check className={`w-4 h-4 mt-0.5 flex-shrink-0 ${isPro ? 'text-emerald-400' : 'text-gray-400'}`} />
+                          <span className={isPro ? 'text-white' : 'text-gray-300'}>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* CTA Button */}
+                    {tier.ctaLink ? (
+                      <a
+                        href={tier.ctaLink}
+                        className={`block w-full py-3 rounded-xl font-semibold text-center text-sm transition-all duration-300 ${
+                          isPro
+                            ? 'bg-gradient-to-r from-gray-200 to-gray-400 hover:from-gray-100 hover:to-gray-300 text-black font-black shadow-lg shadow-gray-500/30'
+                            : 'bg-white/[0.05] hover:bg-white/[0.1] border border-gray-700 hover:border-gray-500'
+                        }`}
+                      >
+                        {tier.cta}
+                      </a>
+                    ) : (
+                      <button
+                        onClick={() => handleSelectTier(tier.name)}
+                        disabled={isLoading}
+                        className={`w-full py-3 rounded-xl font-semibold text-center text-sm transition-all duration-300 ${
+                          isPro
+                            ? 'bg-gradient-to-r from-gray-200 to-gray-400 hover:from-gray-100 hover:to-gray-300 text-black font-black shadow-lg shadow-gray-500/30'
+                            : 'bg-white/[0.05] hover:bg-white/[0.1] border border-gray-700 hover:border-gray-500'
+                        } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      >
+                        {isLoading ? (
+                          <span className="flex items-center justify-center gap-2">
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            Processing...
+                          </span>
+                        ) : (
+                          tier.cta
+                        )}
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Pricing FAQ/Note */}
+            <div className="mt-12 sm:mt-16 text-center">
+              <p className="text-xs sm:text-sm text-gray-400">
+                All plans include a 14-day free trial. No credit card required. Cancel anytime.
+              </p>
+              <p className="text-xs sm:text-sm text-gray-500 mt-2">
+                * Yearly plans save you 17% compared to monthly billing
+              </p>
+            </div>
+          </div>
+        </section>
         {/* COMPARISON TABLE SECTION */}
         <section id="comparison" className="py-40 px-6 relative">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-24">
               <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight text-white">
-                How FinScan Compares
+                How SniperIQ Compares
               </h2>
               <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto font-light">
                 The only platform combining institutional trading intelligence, fundamentals, and AI in one terminal.
@@ -420,7 +673,7 @@ export default function LandingPage() {
                 <thead>
                   <tr className="border-b-2 border-gray-800">
                     <th className="text-left p-6 text-gray-400 font-bold uppercase tracking-wide text-sm">Feature</th>
-                    <th className="text-center p-6 text-white font-black text-lg">FinScan</th>
+                    <th className="text-center p-6 text-white font-black text-lg">SniperIQ</th>
                     <th className="text-center p-6 text-gray-400 font-medium text-sm">TradingView</th>
                     <th className="text-center p-6 text-gray-400 font-medium text-sm">Fiscal.ai</th>
                     <th className="text-center p-6 text-gray-400 font-medium text-sm">AlphaResearch</th>
@@ -731,8 +984,8 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Pricing Section */}
-        <section id="pricing" className="py-24 sm:py-32 lg:py-40 px-4 sm:px-6 relative">
+        {/* Legacy Pricing Section (kept for reference, not linked) */}
+        <section id="pricing-legacy" className="py-24 sm:py-32 lg:py-40 px-4 sm:px-6 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
 
             <div className="max-w-7xl mx-auto relative z-10">
@@ -784,8 +1037,8 @@ export default function LandingPage() {
                   </li>
                 </ul>
 
-                <Link
-                  href="https://app.finscan.uk/register"
+              <Link
+                href="https://app.sniperiq.ai/register"
                   className="block w-full py-4 bg-white/[0.05] hover:bg-white/[0.1] border border-gray-700 hover:border-gray-600 rounded-xl font-bold text-center transition-all duration-300"
                 >
                   Get Started
@@ -835,7 +1088,7 @@ export default function LandingPage() {
                 </ul>
 
                 <Link
-                  href="https://app.finscan.uk/register"
+                  href="https://app.sniperiq.ai/register"
                   className="block w-full py-4 bg-gradient-to-r from-gray-200 to-gray-400 hover:from-gray-100 hover:to-gray-300 text-black rounded-xl font-black text-center transition-all duration-300 shadow-lg shadow-gray-500/30"
                 >
                   Start Free Trial
@@ -863,10 +1116,6 @@ export default function LandingPage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-300">API access</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
                     <span className="text-sm text-gray-300">Custom alerts</span>
                   </li>
                   <li className="flex items-start gap-3">
@@ -880,7 +1129,7 @@ export default function LandingPage() {
                 </ul>
 
                 <Link
-                  href="https://app.finscan.uk/register"
+                  href="https://app.sniperiq.ai/register"
                   className="block w-full py-4 bg-white/[0.05] hover:bg-white/[0.1] border border-gray-700 hover:border-gray-600 rounded-xl font-bold text-center transition-all duration-300"
                 >
                   Contact Sales
@@ -912,11 +1161,11 @@ export default function LandingPage() {
                 </h2>
 
                 <p className="text-lg sm:text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto font-light">
-                  Join professional traders using FinScan Terminal for institutional-grade intelligence.
+                  Join professional traders using SniperIQ Terminal for institutional-grade intelligence.
                 </p>
 
                 <Link
-                  href="https://app.finscan.uk/register"
+                  href="https://app.sniperiq.ai/register"
                   className="group inline-flex items-center gap-3 px-12 py-6 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-2xl font-bold text-xl transition-all duration-500 hover:scale-110 hover:shadow-[0_0_100px_rgba(192,192,192,0.6)]"
                 >
                   <span>Launch Terminal</span>
@@ -942,7 +1191,7 @@ export default function LandingPage() {
                     </div>
                   </div>
                   <span className="text-xl font-black">
-                    FIN<span className="text-gray-300">SCAN</span>
+                    SNIPER<span className="text-gray-300">IQ</span>
                   </span>
                 </div>
                 <p className="text-sm text-gray-400 mb-3">
@@ -960,22 +1209,22 @@ export default function LandingPage() {
                 </h3>
                 <ul className="space-y-2 text-sm">
                   <li>
-                    <a href="https://app.finscan.uk/dashboard" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://app.sniperiq.ai/dashboard" className="text-gray-400 hover:text-white transition-colors">
                       Dashboard
                     </a>
                   </li>
                   <li>
-                    <a href="https://app.finscan.uk/portfolio" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://app.sniperiq.ai/portfolio" className="text-gray-400 hover:text-white transition-colors">
                       Portfolio
                     </a>
                   </li>
                   <li>
-                    <a href="https://app.finscan.uk/research" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://app.sniperiq.ai/research" className="text-gray-400 hover:text-white transition-colors">
                       Research
                     </a>
                   </li>
                   <li>
-                    <a href="https://app.finscan.uk/settings" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://app.sniperiq.ai/settings" className="text-gray-400 hover:text-white transition-colors">
                       Settings
                     </a>
                   </li>
@@ -1063,7 +1312,7 @@ export default function LandingPage() {
                     Companies House
                   </a>
                   <span>•</span>
-                  <span className="text-xs">finscan.uk</span>
+                    <span className="text-xs">sniperiq.ai</span>
                 </div>
               </div>
             </div>
