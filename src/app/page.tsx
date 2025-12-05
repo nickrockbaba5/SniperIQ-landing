@@ -61,7 +61,7 @@ export default function LandingPage() {
       description: 'Get started free',
       features: ['3 analyses/day', '5 AI queries/day', '0 exports/month', '3 basic engines', 'Basic fundamentals', 'Delayed data'],
       cta: 'Get Started',
-      ctaLink: 'https://app.sniperiq.ai/register',
+      ctaLink: 'https://app.sniperiq.ai/',
       popular: false,
     },
     {
@@ -106,7 +106,7 @@ export default function LandingPage() {
   // Handle Stripe checkout
   const handleSelectTier = async (tierName: TierName) => {
     if (tierName === 'free') {
-      window.location.href = 'https://app.sniperiq.ai/register';
+      window.location.href = 'https://app.sniperiq.ai/';
       return;
     }
 
@@ -125,7 +125,7 @@ export default function LandingPage() {
       setCheckoutError(error instanceof Error ? error.message : 'Failed to start checkout');
       // Fallback to registration page
       setTimeout(() => {
-        window.location.href = 'https://app.sniperiq.ai/register';
+        window.location.href = 'https://app.sniperiq.ai/';
       }, 2000);
     } finally {
       setCheckoutLoading(null);
@@ -201,7 +201,7 @@ export default function LandingPage() {
 
               {/* CTA */}
               <Link
-                href="https://app.sniperiq.ai/login"
+                href="https://app.sniperiq.ai/"
                 className="group relative px-6 py-2.5 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-xl font-bold text-sm overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-gray-500/50"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -258,7 +258,7 @@ export default function LandingPage() {
             {/* CTAs - Mobile optimized */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 mb-16">
               <Link
-                href="https://app.sniperiq.ai/register"
+                href="https://app.sniperiq.ai/"
                 className="group relative px-8 py-4 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-xl font-bold text-lg overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(192,192,192,0.5)] flex items-center gap-2"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -534,7 +534,7 @@ export default function LandingPage() {
                 All 18 engines work in real-time to power your trading decisions
               </p>
               <Link
-                href="https://app.sniperiq.ai/register"
+                href="https://app.sniperiq.ai/"
                 className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold text-lg overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(59,130,246,0.5)] group"
               >
                 <span className="relative">Launch All Engines</span>
@@ -1267,7 +1267,7 @@ export default function LandingPage() {
                 </p>
 
                 <Link
-                  href="https://app.sniperiq.ai/register"
+                  href="https://app.sniperiq.ai/"
                   className="group inline-flex items-center gap-3 px-12 py-6 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-2xl font-bold text-xl transition-all duration-500 hover:scale-110 hover:shadow-[0_0_100px_rgba(192,192,192,0.6)]"
                 >
                   <span>Launch Terminal</span>
@@ -1309,22 +1309,22 @@ export default function LandingPage() {
                 </h3>
                 <ul className="space-y-2 text-sm">
                   <li>
-                    <a href="https://app.sniperiq.ai/login" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://app.sniperiq.ai/" className="text-gray-400 hover:text-white transition-colors">
                       Dashboard
                     </a>
                   </li>
                   <li>
-                    <a href="https://app.sniperiq.ai/portfolio" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://app.sniperiq.ai/" className="text-gray-400 hover:text-white transition-colors">
                       Portfolio
                     </a>
                   </li>
                   <li>
-                    <a href="https://app.sniperiq.ai/research" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://app.sniperiq.ai/" className="text-gray-400 hover:text-white transition-colors">
                       Research
                     </a>
                   </li>
                   <li>
-                    <a href="https://app.sniperiq.ai/settings" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://app.sniperiq.ai/" className="text-gray-400 hover:text-white transition-colors">
                       Settings
                     </a>
                   </li>
