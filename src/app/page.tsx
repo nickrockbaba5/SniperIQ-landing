@@ -228,16 +228,6 @@ export default function LandingPage() {
           ))}
 
           <div className="max-w-7xl mx-auto text-center relative z-10">
-            {/* Company Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.02] border border-gray-800/50 rounded-full mb-4 backdrop-blur-xl">
-              <span className="text-xs text-gray-500">
-                A product of{' '}
-                <span className="text-gray-300">
-                  Eagle Digital Services Ltd
-                </span>
-              </span>
-            </div>
-
             {/* Live Badge */}
             <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.03] border border-gray-800 rounded-full mb-10 backdrop-blur-xl hover:bg-white/[0.05] transition-all duration-300">
               <div className="relative flex h-3 w-3">
@@ -1030,9 +1020,7 @@ export default function LandingPage() {
                 <p className="text-sm text-gray-400 mb-3">
                   Institutional-grade financial analysis platform powered by 9 AI engines.
                 </p>
-                <p className="text-xs text-gray-500">
-                  A product of Eagle Digital Services Ltd
-                </p>
+                {/* Company registration details can be added here if needed */}
               </div>
 
               {/* Product */}
@@ -1119,7 +1107,7 @@ export default function LandingPage() {
             </div>
 
             {/* Company Registration Info */}
-            <div className="pt-8 border-t border-gray-900 mb-6">
+            <div className="hidden pt-8 border-t border-gray-900 mb-6">
               <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 text-xs text-gray-600">
                 <p>Eagle Digital Services Ltd</p>
                 <span className="hidden sm:inline">•</span>
@@ -1132,7 +1120,7 @@ export default function LandingPage() {
               </p>
             </div>
 
-            <div className="pt-6 border-t border-gray-900">
+            <div className="hidden pt-6 border-t border-gray-900">
               <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
                 <p>© {new Date().getFullYear()} Eagle Digital Services Ltd. All rights reserved.</p>
                 <div className="flex items-center gap-4">

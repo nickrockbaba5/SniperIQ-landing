@@ -9,7 +9,7 @@ const CRISP_WEBSITE_ID = process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID;
 
 export const metadata: Metadata = {
   // Basic Meta
-  title: "SniperIQ - Institutional-Grade Financial Intelligence | AI-Powered Market Analysis",
+  title: "SniperIQ – Institutional-Grade Financial Intelligence Platform.",
   description: "SniperIQ is an advanced AI research platform combining 9 specialized engines for institutional-grade market analysis. Real-time data, professional tools, and AI-powered insights for equities, indices, forex, crypto, and commodities.",
 
   // Keywords for SEO
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: "https://sniperiq.ai",
     siteName: "SniperIQ",
-    title: "SniperIQ - Institutional-Grade Financial Intelligence",
+    title: "SniperIQ – Institutional-Grade Financial Intelligence Platform.",
     description: "Advanced AI research platform combining 9 specialized engines for institutional-grade market analysis across global markets.",
     images: [
       {
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   // Twitter Card
   twitter: {
     card: "summary_large_image",
-    title: "SniperIQ - Institutional-Grade Financial Intelligence",
+    title: "SniperIQ – Institutional-Grade Financial Intelligence Platform.",
     description: "Advanced AI research platform with 9 specialized engines for institutional-grade market analysis.",
     images: ["https://sniperiq.ai/twitter-image.png"],
     creator: "@sniperiq",
