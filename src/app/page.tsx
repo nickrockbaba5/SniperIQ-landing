@@ -8,6 +8,7 @@ import {
   TrendingDown, Layers, FileText, MessageSquare, Lightbulb, Building2, Clock, Loader2, Percent
 } from 'lucide-react';
 import { redirectToCheckout, type TierName } from '../lib/stripe';
+import ROICalculator from '../components/ROICalculator';
 
 export default function LandingPage() {
   const [scrollY, setScrollY] = useState(0);
@@ -1000,6 +1001,10 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
+
+        {/* ROI CALCULATOR SECTION */}
+        <ROICalculator />
+
         {/* COMPARISON TABLE SECTION */}
         <section id="comparison" className="py-40 px-6 relative">
           <div className="max-w-7xl mx-auto">
