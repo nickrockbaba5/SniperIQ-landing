@@ -1,28 +1,32 @@
-'use client';
-
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import {
   Brain, Zap, TrendingUp, Shield, Activity, BarChart3, Globe, ArrowRight, Play,
   Sparkles, Cpu, Target, ChevronRight, Check, DollarSign, LineChart,
-  TrendingDown, Layers, FileText, MessageSquare, Lightbulb, Building2, Clock, Loader2
+  TrendingDown, Layers, FileText, MessageSquare, Lightbulb, Building2, Clock, Loader2, Percent
 } from 'lucide-react';
 import { redirectToCheckout, type TierName } from '../lib/stripe';
+import ROICalculator from '../components/ROICalculator';
 
 export default function LandingPage() {
   const [scrollY, setScrollY] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [liveStats, setLiveStats] = useState({
     analyses: 127543,
-    engines: 9,
+    engines: 18,
     accuracy: 94.2,
     uptime: 99.9
   });
 
   // Pricing state
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
+  const [currency, setCurrency] = useState<'GBP' | 'USD' | 'INR'>('GBP');
   const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
+  // Currency conversion rates (approximate)
+  const currencyRates = { GBP: 1, USD: 1.27, INR: 105 };
+  const currencySymbols = { GBP: '£', USD: '$', INR: '₹' };
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -58,55 +62,70 @@ export default function LandingPage() {
       name: 'free' as TierName,
       displayName: 'Free',
       price: { monthly: 0, yearly: 0 },
+      originalPrice: null,
+      pricePerDay: null,
       description: 'Get started free',
-      features: ['3 analyses/day', '5 AI queries/day', '0 exports/month', '3 basic engines', 'Basic fundamentals', 'Delayed data'],
-      cta: 'Get Started',
-      ctaLink: 'https://app.sniperiq.ai/register',
+      features: ['3 analyses/day', '5 AI queries/day', '0 exports/month', '3 AI engines', 'Basic fundamentals', 'Delayed data'],
+      cta: 'Get Started Free',
+      ctaLink: 'https://app.sniperiq.ai/',
       popular: false,
+      badge: null,
     },
     {
       name: 'starter' as TierName,
       displayName: 'Starter',
       price: { monthly: 39, yearly: 390 },
+      originalPrice: { monthly: 49, yearly: 468 },
+      pricePerDay: { monthly: '£1.30', yearly: '£1.07' },
       description: 'Essential trading intelligence',
-      features: ['10 analyses/day', '20 AI queries/day', '10 exports/month', '3 basic engines', 'Basic fundamentals', 'Delayed data'],
+      features: ['10 analyses/day', '20 AI queries/day', '10 exports/month', '6 AI engines', 'Basic fundamentals', 'Delayed data'],
       cta: 'Start Free Trial',
       popular: false,
+      badge: 'SAVE £78/YEAR',
     },
     {
       name: 'pro' as TierName,
       displayName: 'Pro',
       price: { monthly: 99, yearly: 990 },
+      originalPrice: { monthly: 119, yearly: 1188 },
+      pricePerDay: { monthly: '£3.30', yearly: '£2.71' },
       description: 'Professional trading suite',
-      features: ['50 analyses/day', '100 AI queries/day', '50 exports/month', 'All 12 AI engines', 'Full fundamentals', 'Real-time data'],
-      cta: 'Start Free Trial',
+      features: ['50 analyses/day', '100 AI queries/day', '50 exports/month', 'All 18 AI engines', 'Full fundamentals', 'Real-time data'],
+      cta: 'Get 15 FREE Analysis Credits',
       popular: true,
+      badge: 'BEST VALUE - SAVE £198/YEAR',
     },
     {
       name: 'advanced' as TierName,
       displayName: 'Advanced',
       price: { monthly: 199, yearly: 1990 },
+      originalPrice: { monthly: 239, yearly: 2388 },
+      pricePerDay: { monthly: '£6.63', yearly: '£5.45' },
       description: 'Institutional-grade intelligence',
-      features: ['200 analyses/day', '500 AI queries/day', '200 exports/month', 'All 12 AI engines', 'Premium fundamentals', 'Real-time data + API access'],
+      features: ['200 analyses/day', '500 AI queries/day', '200 exports/month', 'All 18 AI engines', 'Premium fundamentals', 'Real-time data + API access'],
       cta: 'Start Free Trial',
       popular: false,
+      badge: 'SAVE £398/YEAR',
     },
     {
       name: 'enterprise' as TierName,
       displayName: 'Enterprise',
       price: { monthly: 0, yearly: 0 },
+      originalPrice: null,
+      pricePerDay: null,
       description: 'Custom enterprise solutions',
-      features: ['Unlimited analyses', 'Unlimited AI queries', 'Unlimited exports', 'All 12 AI engines', 'Premium fundamentals', 'Real-time data', 'Dedicated support', 'White-label options'],
+      features: ['Unlimited analyses', 'Unlimited AI queries', 'Unlimited exports', 'All 18 AI engines', 'Premium fundamentals', 'Real-time data', 'Dedicated support', 'White-label options'],
       cta: 'Contact Sales',
       ctaLink: 'mailto:enterprise@sniperiq.ai?subject=SniperIQ%20Enterprise%20Plan',
       popular: false,
+      badge: 'CUSTOM PRICING',
     },
   ];
 
   // Handle Stripe checkout
   const handleSelectTier = async (tierName: TierName) => {
     if (tierName === 'free') {
-      window.location.href = 'https://app.sniperiq.ai/register';
+      window.location.href = 'https://app.sniperiq.ai/';
       return;
     }
 
@@ -125,7 +144,7 @@ export default function LandingPage() {
       setCheckoutError(error instanceof Error ? error.message : 'Failed to start checkout');
       // Fallback to registration page
       setTimeout(() => {
-        window.location.href = 'https://app.sniperiq.ai/register';
+        window.location.href = 'https://app.sniperiq.ai/';
       }, 2000);
     } finally {
       setCheckoutLoading(null);
@@ -192,21 +211,21 @@ export default function LandingPage() {
 
               {/* Nav */}
               <nav className="hidden md:flex items-center gap-8">
-                <Link href="/screener" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Screener</Link>
-                <Link href="/research/AAPL" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Research</Link>
+                <Link to="/screener" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Screener</Link>
+                <Link to="/research/AAPL" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Research</Link>
+                <a href="#engines" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Engines</a>
                 <a href="#modules" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Platform</a>
-                <a href="#comparison" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Compare</a>
                 <a href="#pricing" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Pricing</a>
               </nav>
 
               {/* CTA */}
-              <Link
-                href="https://app.sniperiq.ai/register"
+              <a
+                href="https://app.sniperiq.ai/"
                 className="group relative px-6 py-2.5 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-xl font-bold text-sm overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-gray-500/50"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <span className="relative">Launch Terminal</span>
-              </Link>
+              </a>
             </div>
           </div>
         </header>
@@ -228,21 +247,6 @@ export default function LandingPage() {
           ))}
 
           <div className="max-w-7xl mx-auto text-center relative z-10">
-            {/* Company Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.02] border border-gray-800/50 rounded-full mb-4 backdrop-blur-xl">
-              <span className="text-xs text-gray-500">
-                A product of{' '}
-                <a
-                  href="https://find-and-update.company-information.service.gov.uk/company/16584009"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors underline"
-                >
-                  Eagle Digital Services Ltd
-                </a>
-              </span>
-            </div>
-
             {/* Live Badge */}
             <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.03] border border-gray-800 rounded-full mb-10 backdrop-blur-xl hover:bg-white/[0.05] transition-all duration-300">
               <div className="relative flex h-3 w-3">
@@ -250,7 +254,7 @@ export default function LandingPage() {
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-300"></span>
               </div>
               <span className="text-sm font-semibold text-gray-300">
-                UK-Based • Institutional Grade • Live at finscan.uk
+                UK-Based • Institutional Grade • SniperIQ Terminal
               </span>
             </div>
 
@@ -267,19 +271,19 @@ export default function LandingPage() {
 
             {/* Subheadline - Compact for mobile */}
             <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed">
-              One platform powered by <span className="text-white font-semibold">9 AI engines</span>, comprehensive fundamentals, and real-time liquidity intelligence.
+              One platform powered by <span className="text-white font-semibold">18 AI engines</span>, comprehensive fundamentals, and real-time liquidity intelligence.
             </p>
 
             {/* CTAs - Mobile optimized */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 mb-16">
-              <Link
-                href="https://app.sniperiq.ai/register"
+              <a
+                href="https://app.sniperiq.ai/"
                 className="group relative px-8 py-4 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-xl font-bold text-lg overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(192,192,192,0.5)] flex items-center gap-2"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <span className="relative">Launch Terminal</span>
                 <ArrowRight className="w-6 h-6 relative group-hover:translate-x-2 transition-transform duration-300" />
-              </Link>
+              </a>
 
               <a
                 href="#live-preview"
@@ -313,6 +317,252 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* 18 AI ENGINES SHOWCASE SECTION */}
+        <section id="engines" className="py-32 px-6 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-500/[0.02] to-transparent" />
+
+          <div className="max-w-7xl mx-auto relative z-10">
+            {/* Section Header */}
+            <div className="text-center mb-20">
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 rounded-full mb-6 backdrop-blur-xl">
+                <Cpu className="w-4 h-4 text-blue-400" />
+                <span className="text-sm font-semibold text-blue-300">
+                  18 Specialized AI Engines
+                </span>
+              </div>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 tracking-tight text-white">
+                Powered by 18 AI Engines
+              </h2>
+              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">
+                Each engine is a specialized AI system trained on institutional-grade data. Working in concert to deliver unmatched trading and fundamental analysis.
+              </p>
+            </div>
+
+            {/* Engines Grid - 3 columns on desktop, 2 on tablet, 1 on mobile */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+              {[
+                {
+                  id: 1,
+                  name: 'Sniper Master',
+                  category: 'Trading Intelligence',
+                  description: 'ICT structure analysis with order blocks, FVG, and liquidity pool detection',
+                  icon: Target,
+                  color: 'blue',
+                  gradient: 'from-blue-600 to-blue-400'
+                },
+                {
+                  id: 2,
+                  name: 'Fusion Brain',
+                  category: 'Multi-Timeframe',
+                  description: 'Aggregates signals across 9 timeframes with adaptive weighting',
+                  icon: Brain,
+                  color: 'purple',
+                  gradient: 'from-purple-600 to-purple-400'
+                },
+                {
+                  id: 3,
+                  name: 'Gamma Vision',
+                  category: 'Options Flow',
+                  description: 'Real-time gamma exposure mapping and dealer hedging analysis',
+                  icon: Zap,
+                  color: 'amber',
+                  gradient: 'from-amber-600 to-amber-400'
+                },
+                {
+                  id: 4,
+                  name: 'Volume Footprint',
+                  category: 'Order Flow',
+                  description: 'Delta analysis, absorption patterns, and institutional buying pressure',
+                  icon: BarChart3,
+                  color: 'green',
+                  gradient: 'from-green-600 to-green-400'
+                },
+                {
+                  id: 5,
+                  name: 'Liquidity Hunter',
+                  category: 'Market Microstructure',
+                  description: 'Stop-loss cluster detection and liquidity sweep zones',
+                  icon: Activity,
+                  color: 'red',
+                  gradient: 'from-red-600 to-red-400'
+                },
+                {
+                  id: 6,
+                  name: 'Scenario Engine',
+                  category: 'Probability',
+                  description: 'Monte Carlo simulation for multi-path price projections',
+                  icon: TrendingUp,
+                  color: 'cyan',
+                  gradient: 'from-cyan-600 to-cyan-400'
+                },
+                {
+                  id: 7,
+                  name: 'Regime Detector',
+                  category: 'Machine Learning',
+                  description: 'Market phase classification: trending, ranging, volatile, or calm',
+                  icon: Sparkles,
+                  color: 'pink',
+                  gradient: 'from-pink-600 to-pink-400'
+                },
+                {
+                  id: 8,
+                  name: 'Macro Filter',
+                  category: 'Macroeconomic',
+                  description: 'FRED economic data integration with central bank policy tracker',
+                  icon: Globe,
+                  color: 'indigo',
+                  gradient: 'from-indigo-600 to-indigo-400'
+                },
+                {
+                  id: 9,
+                  name: 'Quality Score',
+                  category: 'Fundamental',
+                  description: 'Piotroski F-Score & Altman Z-Score for business quality assessment',
+                  icon: Shield,
+                  color: 'emerald',
+                  gradient: 'from-emerald-600 to-emerald-400'
+                },
+                {
+                  id: 10,
+                  name: 'DCF Valuation',
+                  category: 'Intrinsic Value',
+                  description: 'Quality-adjusted discounted cash flow with WACC optimization',
+                  icon: DollarSign,
+                  color: 'teal',
+                  gradient: 'from-teal-600 to-teal-400'
+                },
+                {
+                  id: 11,
+                  name: 'Ratio Benchmark',
+                  category: 'Comparative',
+                  description: '40+ financial ratios with industry percentile rankings',
+                  icon: Percent,
+                  color: 'orange',
+                  gradient: 'from-orange-600 to-orange-400'
+                },
+                {
+                  id: 12,
+                  name: 'Growth Analyzer',
+                  category: 'Growth Metrics',
+                  description: 'Revenue, earnings, and FCF growth tracking with sustainability scoring',
+                  icon: TrendingUp,
+                  color: 'lime',
+                  gradient: 'from-lime-600 to-lime-400'
+                },
+                {
+                  id: 13,
+                  name: 'Efficiency Scanner',
+                  category: 'Operations',
+                  description: 'Asset turnover, ROE, ROA, and capital efficiency metrics',
+                  icon: Cpu,
+                  color: 'violet',
+                  gradient: 'from-violet-600 to-violet-400'
+                },
+                {
+                  id: 14,
+                  name: 'Ownership Tracker',
+                  category: 'Institutional Flow',
+                  description: 'Institutional holder analysis and insider transaction monitoring',
+                  icon: Building2,
+                  color: 'rose',
+                  gradient: 'from-rose-600 to-rose-400'
+                },
+                {
+                  id: 15,
+                  name: 'Earnings Insight',
+                  category: 'Earnings Quality',
+                  description: 'EPS surprise analysis, guidance tracking, and estimate revisions',
+                  icon: LineChart,
+                  color: 'sky',
+                  gradient: 'from-sky-600 to-sky-400'
+                },
+                {
+                  id: 16,
+                  name: 'Sentiment AI',
+                  category: 'Market Sentiment',
+                  description: 'News sentiment analysis with institutional positioning indicators',
+                  icon: MessageSquare,
+                  color: 'fuchsia',
+                  gradient: 'from-fuchsia-600 to-fuchsia-400'
+                },
+                {
+                  id: 17,
+                  name: 'ETF Exposure',
+                  category: 'Fund Flow',
+                  description: 'Track which ETFs hold the stock and passive flow dynamics',
+                  icon: Layers,
+                  color: 'slate',
+                  gradient: 'from-slate-600 to-slate-400'
+                },
+                {
+                  id: 18,
+                  name: 'Research Copilot',
+                  category: 'AI Assistant',
+                  description: 'GPT-4 powered research assistant with real-time data integration',
+                  icon: Lightbulb,
+                  color: 'yellow',
+                  gradient: 'from-yellow-600 to-yellow-400'
+                }
+              ].map((engine, i) => {
+                const Icon = engine.icon;
+                return (
+                  <div
+                    key={engine.id}
+                    className="group relative p-6 bg-white/[0.02] backdrop-blur-xl border border-gray-800 rounded-xl hover:bg-white/[0.05] hover:border-gray-600 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
+                    style={{
+                      animationDelay: `${i * 0.05}s`
+                    }}
+                  >
+                    {/* Engine Number Badge */}
+                    <div className="absolute top-4 right-4 w-8 h-8 bg-white/[0.05] border border-gray-700 rounded-full flex items-center justify-center">
+                      <span className="text-xs font-bold text-gray-500">#{engine.id}</span>
+                    </div>
+
+                    {/* Icon */}
+                    <div className={`w-12 h-12 bg-gradient-to-br ${engine.gradient} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                      <Icon className="w-6 h-6 text-white" />
+                    </div>
+
+                    {/* Engine Name */}
+                    <h3 className="text-lg font-bold text-white mb-1 group-hover:text-gray-200 transition-colors">
+                      {engine.name}
+                    </h3>
+
+                    {/* Category Badge */}
+                    <div className="inline-block mb-3">
+                      <span className={`text-xs font-medium px-2.5 py-1 bg-${engine.color}-500/10 text-${engine.color}-300 border border-${engine.color}-500/20 rounded-full`}>
+                        {engine.category}
+                      </span>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      {engine.description}
+                    </p>
+
+                    {/* Hover Glow Effect */}
+                    <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${engine.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 -z-10 blur-xl`} />
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Bottom CTA */}
+            <div className="text-center mt-16">
+              <p className="text-gray-400 mb-6 text-lg">
+                All 18 engines work in real-time to power your trading decisions
+              </p>
+              <a
+                href="https://app.sniperiq.ai/"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold text-lg overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(59,130,246,0.5)] group"
+              >
+                <span className="relative">Launch All Engines</span>
+                <ArrowRight className="w-5 h-5 relative group-hover:translate-x-2 transition-transform duration-300" />
+              </a>
+            </div>
+          </div>
+        </section>
+
         {/* THREE HERO MODULES SECTION */}
         <section id="modules" className="py-40 px-6 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.01] to-transparent" />
@@ -341,13 +591,15 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* Screenshot placeholder */}
-                <div className="mb-6 h-48 sm:h-64 md:h-80 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-xl sm:rounded-2xl border border-gray-800 flex items-center justify-center">
-                  <div className="text-center px-4">
-                    <LineChart className="w-12 h-12 sm:w-16 sm:h-16 text-gray-600 mx-auto mb-2 sm:mb-3" />
-                    <p className="text-gray-500 text-sm sm:text-base">Terminal Screenshot Here</p>
-                    <p className="text-gray-600 text-xs sm:text-sm">ICT Structure + Gamma + Liquidity Maps</p>
-                  </div>
+                {/* Dashboard Screenshot with Glassmorphism */}
+                <div className="mb-6 relative group overflow-hidden rounded-xl sm:rounded-2xl">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-xl border border-white/10" />
+                  <img
+                    src="/images/screenshots/dashboard-institutional.png"
+                    alt="Institutional Trade Intelligence Dashboard showing BEARISH signal for AAPL"
+                    className="w-full h-auto rounded-xl sm:rounded-2xl shadow-2xl group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 </div>
 
                 {/* Features grid */}
@@ -397,13 +649,15 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* Screenshot placeholder */}
-                <div className="mb-6 h-48 sm:h-64 md:h-80 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-xl sm:rounded-2xl border border-gray-800 flex items-center justify-center">
-                  <div className="text-center px-4">
-                    <FileText className="w-12 h-12 sm:w-16 sm:h-16 text-gray-600 mx-auto mb-2 sm:mb-3" />
-                    <p className="text-gray-500 text-sm sm:text-base">Fundamentals Page Screenshot</p>
-                    <p className="text-gray-600 text-xs sm:text-sm">Financial Statements + Key Metrics + Ratios</p>
-                  </div>
+                {/* Research Workspace Screenshot with Glassmorphism */}
+                <div className="mb-6 relative group overflow-hidden rounded-xl sm:rounded-2xl">
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 backdrop-blur-xl border border-white/10" />
+                  <img
+                    src="/images/screenshots/research-workspace.png"
+                    alt="Research Workspace showing AAPL financial statements and metrics"
+                    className="w-full h-auto rounded-xl sm:rounded-2xl shadow-2xl group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 </div>
 
                 {/* Features grid */}
@@ -448,13 +702,15 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* Screenshot placeholder */}
-                <div className="mb-6 h-48 sm:h-64 md:h-80 bg-gradient-to-br from-amber-500/10 to-orange-500/10 rounded-xl sm:rounded-2xl border border-gray-800 flex items-center justify-center">
-                  <div className="text-center px-4">
-                    <MessageSquare className="w-12 h-12 sm:w-16 sm:h-16 text-gray-600 mx-auto mb-2 sm:mb-3" />
-                    <p className="text-gray-500 text-sm sm:text-base">AI Chat Interface Screenshot</p>
-                    <p className="text-gray-600 text-xs sm:text-sm">Research Engine + Context-Aware Analysis</p>
-                  </div>
+                {/* Comparison Table Screenshot with Glassmorphism */}
+                <div className="mb-6 relative group overflow-hidden rounded-xl sm:rounded-2xl">
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-orange-500/20 backdrop-blur-xl border border-white/10" />
+                  <img
+                    src="/images/screenshots/comparison-table.png"
+                    alt="SniperIQ vs Competitors Comparison showing institutional advantages"
+                    className="w-full h-auto rounded-xl sm:rounded-2xl shadow-2xl group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 </div>
 
                 {/* Features grid */}
@@ -488,6 +744,33 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* LIVE PLATFORM PREVIEW SECTION */}
+        <section className="py-20 px-6 relative">
+          <div className="max-w-5xl mx-auto relative z-10">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 text-white">
+                See It In Action
+              </h2>
+              <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto">
+                Real institutional intelligence at your fingertips
+              </p>
+            </div>
+
+            {/* Institutional Engine Screenshot with Enhanced Glassmorphism */}
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-700" />
+              <div className="relative overflow-hidden rounded-2xl border border-white/20 backdrop-blur-2xl bg-white/5">
+                <img
+                  src="/images/screenshots/institutional-engine.png"
+                  alt="Institutional Intelligence Engine breakdown showing detailed analysis"
+                  className="w-full h-auto group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ENHANCED PRICING SECTION with Stripe Integration */}
         <section id="pricing" className="py-24 sm:py-32 lg:py-40 px-4 sm:px-6 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
@@ -506,6 +789,23 @@ export default function LandingPage() {
               <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto font-light">
                 Institutional-grade trading intelligence at every level. Choose the plan that fits your workflow.
               </p>
+            </div>
+
+            {/* Currency Toggle */}
+            <div className="flex items-center justify-center gap-2 mb-6">
+              {(['GBP', 'USD', 'INR'] as const).map((curr) => (
+                <button
+                  key={curr}
+                  onClick={() => setCurrency(curr)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                    currency === curr
+                      ? 'bg-gradient-to-r from-gray-200 to-gray-400 text-black'
+                      : 'bg-white/[0.03] border border-gray-800 text-gray-400 hover:border-gray-600'
+                  }`}
+                >
+                  {currencySymbols[curr]} {curr}
+                </button>
+              ))}
             </div>
 
             {/* Billing Toggle */}
@@ -542,9 +842,11 @@ export default function LandingPage() {
             {/* Pricing Cards Grid */}
             <div className="grid gap-6 lg:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-5 max-w-7xl mx-auto">
               {pricingTiers.map((tier) => {
-                const price = billingCycle === 'yearly' && tier.price.yearly > 0
-                  ? (tier.price.yearly / 12).toFixed(0)
+                const basePrice = billingCycle === 'yearly' && tier.price.yearly > 0
+                  ? tier.price.yearly / 12
                   : tier.price.monthly;
+                const convertedPrice = Math.round(basePrice * currencyRates[currency]);
+                const price = convertedPrice;
                 const isLoading = checkoutLoading === tier.name;
                 const isPro = tier.popular;
 
@@ -557,10 +859,14 @@ export default function LandingPage() {
                         : 'bg-white/[0.02] border border-gray-800 hover:bg-white/[0.05] hover:border-gray-600'
                     }`}
                   >
-                    {/* Most Popular Badge */}
-                    {isPro && (
-                      <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-gray-300 to-gray-500 text-black text-xs font-black rounded-full uppercase tracking-wider">
-                        Most Popular
+                    {/* Badge - Popular or Savings */}
+                    {(isPro || tier.badge) && (
+                      <div className={`absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 text-xs font-black rounded-full uppercase tracking-wider whitespace-nowrap ${
+                        isPro
+                          ? 'bg-gradient-to-r from-gray-300 to-gray-500 text-black'
+                          : 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white'
+                      }`}>
+                        {isPro ? 'Most Popular' : tier.badge}
                       </div>
                     )}
 
@@ -581,19 +887,43 @@ export default function LandingPage() {
                           <span className="text-3xl sm:text-4xl font-black text-gray-200">Custom</span>
                         </div>
                       ) : (
-                        <div className="flex items-baseline gap-2">
-                          <span className={`text-4xl sm:text-5xl font-black ${isPro ? 'text-white' : 'text-gray-200'}`}>
-                            £{price}
-                          </span>
-                          <span className={`text-sm ${isPro ? 'text-gray-300' : 'text-gray-400'}`}>
-                            {billingCycle === 'yearly' && tier.price.yearly > 0 ? '/mo (billed yearly)' : '/month'}
-                          </span>
-                        </div>
-                      )}
-                      {billingCycle === 'yearly' && tier.price.yearly > 0 && tier.name !== 'free' && (
-                        <p className="text-xs text-emerald-400 mt-1">
-                          £{tier.price.yearly}/year - Save £{(tier.price.monthly * 12 - tier.price.yearly)}
-                        </p>
+                        <>
+                          {/* Strikethrough Original Price */}
+                          {tier.originalPrice && tier.name !== 'free' && (
+                            <div className="flex items-baseline gap-2 mb-1">
+                              <span className="text-lg text-gray-500 line-through">
+                                {currencySymbols[currency]}{Math.round((billingCycle === 'yearly' ? tier.originalPrice.yearly / 12 : tier.originalPrice.monthly) * currencyRates[currency])}
+                              </span>
+                              <span className="px-2 py-0.5 bg-red-500/20 text-red-400 text-xs font-bold rounded">
+                                {Math.round(((billingCycle === 'yearly' ? (tier.originalPrice.yearly / 12 - tier.price.yearly / 12) / (tier.originalPrice.yearly / 12) : (tier.originalPrice.monthly - tier.price.monthly) / tier.originalPrice.monthly) * 100))}% OFF
+                              </span>
+                            </div>
+                          )}
+
+                          {/* Current Price */}
+                          <div className="flex items-baseline gap-2">
+                            <span className={`text-4xl sm:text-5xl font-black ${isPro ? 'text-white' : 'text-gray-200'}`}>
+                              {currencySymbols[currency]}{price}
+                            </span>
+                            <span className={`text-sm ${isPro ? 'text-gray-300' : 'text-gray-400'}`}>
+                              {billingCycle === 'yearly' && tier.price.yearly > 0 ? '/mo (billed yearly)' : '/month'}
+                            </span>
+                          </div>
+
+                          {/* Per-Day Cost */}
+                          {tier.pricePerDay && tier.name !== 'free' && (
+                            <p className="text-xs text-gray-400 mt-1">
+                              Only {currencySymbols[currency]}{(price / 30).toFixed(2)}/day
+                            </p>
+                          )}
+
+                          {/* Yearly Savings */}
+                          {billingCycle === 'yearly' && tier.price.yearly > 0 && tier.name !== 'free' && (
+                            <p className="text-xs text-emerald-400 mt-1 font-semibold">
+                              {currencySymbols[currency]}{Math.round(tier.price.yearly * currencyRates[currency])}/year - Save {currencySymbols[currency]}{Math.round((tier.price.monthly * 12 - tier.price.yearly) * currencyRates[currency])}
+                            </p>
+                          )}
+                        </>
                       )}
                     </div>
 
@@ -644,214 +974,109 @@ export default function LandingPage() {
               })}
             </div>
 
-            {/* Pricing FAQ/Note */}
-            <div className="mt-12 sm:mt-16 text-center">
-              <p className="text-xs sm:text-sm text-gray-400">
-                All plans include a 14-day free trial. No credit card required. Cancel anytime.
-              </p>
-              <p className="text-xs sm:text-sm text-gray-500 mt-2">
-                * Yearly plans save you 17% compared to monthly billing
-              </p>
+            {/* Trust Signals & Scarcity */}
+            <div className="mt-12 sm:mt-16 space-y-6">
+              {/* Scarcity Messaging */}
+              <div className="flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-red-500/10 border border-amber-500/30 rounded-2xl max-w-2xl mx-auto">
+                <svg className="w-5 h-5 text-amber-400 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                </svg>
+                <p className="text-sm sm:text-base text-amber-300 font-semibold">
+                  <span className="text-amber-200 font-black">47 spots left</span> this month at current pricing • Price increases Jan 1st, 2026
+                </p>
+              </div>
+
+              {/* Trust Badges */}
+              <div className="flex flex-wrap items-center justify-center gap-6 px-4">
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/[0.02] border border-gray-800 rounded-lg">
+                  <svg className="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-xs sm:text-sm text-gray-300 font-medium">256-bit SSL Encryption</span>
+                </div>
+
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/[0.02] border border-gray-800 rounded-lg">
+                  <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                    <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-xs sm:text-sm text-gray-300 font-medium">FCA Compliant</span>
+                </div>
+
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/[0.02] border border-gray-800 rounded-lg">
+                  <svg className="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-xs sm:text-sm text-gray-300 font-medium">30-Day Money-Back Guarantee</span>
+                </div>
+              </div>
+
+              {/* Trust Text */}
+              <div className="text-center space-y-2">
+                <p className="text-xs sm:text-sm text-gray-400">
+                  All plans include a <span className="text-white font-semibold">14-day free trial</span>. No credit card required. Cancel anytime.
+                </p>
+                <p className="text-xs sm:text-sm text-gray-500">
+                  * Yearly plans save you 17% compared to monthly billing. Prices shown in {currency}.
+                </p>
+              </div>
             </div>
           </div>
         </section>
-                <div className="mb-6">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl sm:text-5xl font-black text-gray-200">£39</span>
-                    <span className="text-gray-400 text-sm">/month</span>
-                  </div>
-                </div>
-                <ul className="space-y-3 mb-6 text-sm">
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">10 analyses/day</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">20 AI queries/day</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">10 exports/month</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">3 basic engines</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">Basic fundamentals</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">Delayed data</span>
-                  </li>
-                </ul>
-                <Link
-                  href="https://app.sniperiq.ai/register"
-                  className="block w-full py-3 bg-white/[0.05] hover:bg-white/[0.1] border border-gray-700 hover:border-gray-500 rounded-xl font-semibold text-center text-sm transition-all duration-300"
-                >
-                  Get Started
-                </Link>
-              </div>
 
-              {/* Pro Tier - Most Popular */}
-              <div className="group relative p-6 sm:p-7 bg-gradient-to-br from-gray-500/10 via-white/[0.05] to-gray-500/10 backdrop-blur-xl border-2 border-gray-400 rounded-3xl hover:border-gray-300 transition-all duration-500 scale-[1.02] hover:scale-105 shadow-2xl shadow-gray-500/20">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-gray-300 to-gray-500 text-black text-xs font-black rounded-full uppercase tracking-wider">
-                  Most Popular
+        {/* SOCIAL PROOF SECTION */}
+        <section className="py-20 px-6 relative">
+          <div className="max-w-6xl mx-auto">
+            {/* Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+              {[
+                { value: '500+', label: 'Active Traders', icon: '👥' },
+                { value: '125k+', label: 'Analyses Generated', icon: '📊' },
+                { value: '18', label: 'AI Engines', icon: '🤖' },
+                { value: '99.9%', label: 'Uptime SLA', icon: '⚡' },
+              ].map((stat, i) => (
+                <div key={i} className="text-center p-6 bg-white/[0.02] border border-gray-800 rounded-2xl">
+                  <span className="text-2xl mb-2 block">{stat.icon}</span>
+                  <span className="text-3xl sm:text-4xl font-black text-white block mb-1">{stat.value}</span>
+                  <span className="text-sm text-gray-400">{stat.label}</span>
                 </div>
-                <div className="mb-6">
-                  <h3 className="text-xl sm:text-2xl font-black mb-1 text-white">Pro</h3>
-                  <p className="text-xs sm:text-sm text-gray-300">Professional trading suite</p>
-                </div>
-                <div className="mb-6">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl sm:text-5xl font-black text-white">£99</span>
-                    <span className="text-gray-300 text-sm">/month</span>
-                  </div>
-                </div>
-                <ul className="space-y-3 mb-6 text-sm">
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white">50 analyses/day</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white">100 AI queries/day</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white">50 exports/month</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white">All 9 AI engines</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white">Full fundamentals</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white">Real-time data</span>
-                  </li>
-                </ul>
-                <Link
-                  href="https://app.sniperiq.ai/register"
-                  className="block w-full py-3 bg-gradient-to-r from-gray-200 to-gray-400 hover:from-gray-100 hover:to-gray-300 text-black rounded-xl font-black text-center text-sm transition-all duration-300 shadow-lg shadow-gray-500/30"
-                >
-                  Get Started
-                </Link>
-              </div>
-
-              {/* Advanced Tier */}
-              <div className="group relative p-6 sm:p-7 bg-white/[0.02] backdrop-blur-xl border border-gray-800 rounded-3xl hover:bg-white/[0.05] hover:border-gray-600 transition-all duration-500">
-                <div className="mb-6">
-                  <h3 className="text-xl sm:text-2xl font-black mb-1 text-white">Advanced</h3>
-                  <p className="text-xs sm:text-sm text-gray-400">Institutional-grade intelligence</p>
-                </div>
-                <div className="mb-6">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl sm:text-5xl font-black text-gray-200">£199</span>
-                    <span className="text-gray-400 text-sm">/month</span>
-                  </div>
-                </div>
-                <ul className="space-y-3 mb-6 text-sm">
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">200 analyses/day</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">500 AI queries/day</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">200 exports/month</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">All 9 AI engines</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">Premium fundamentals</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">Real-time data</span>
-                  </li>
-                </ul>
-                <Link
-                  href="https://app.sniperiq.ai/register"
-                  className="block w-full py-3 bg-white/[0.05] hover:bg-white/[0.1] border border-gray-700 hover:border-gray-500 rounded-xl font-semibold text-center text-sm transition-all duration-300"
-                >
-                  Get Started
-                </Link>
-              </div>
-
-              {/* Enterprise Tier */}
-              <div className="group relative p-6 sm:p-7 bg-white/[0.02] backdrop-blur-xl border border-gray-800 rounded-3xl hover:bg-white/[0.05] hover:border-gray-600 transition-all duration-500">
-                <div className="mb-6">
-                  <h3 className="text-xl sm:text-2xl font-black mb-1 text-white">Enterprise</h3>
-                  <p className="text-xs sm:text-sm text-gray-400">Custom enterprise solutions</p>
-                </div>
-                <div className="mb-6">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl sm:text-4xl font-black text-gray-200">Custom Pricing</span>
-                  </div>
-                </div>
-                <ul className="space-y-3 mb-6 text-sm">
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">Unlimited analyses/day</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">Unlimited AI queries/day</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">Unlimited exports/month</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">All 9 AI engines</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">Premium fundamentals</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">Real-time data</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">Dedicated support</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">White-label options</span>
-                  </li>
-                </ul>
-                <a
-                  href="mailto:enterprise@sniperiq.ai?subject=SniperIQ%20Enterprise%20Plan"
-                  className="block w-full py-3 bg-white/[0.05] hover:bg-white/[0.1] border border-gray-700 hover:border-gray-500 rounded-xl font-semibold text-center text-sm transition-all duration-300"
-                >
-                  Contact Sales
-                </a>
-              </div>
+              ))}
             </div>
 
-            {/* Pricing FAQ/Note */}
-            <div className="mt-12 sm:mt-16 text-center">
-              <p className="text-xs sm:text-sm text-gray-400">
-                All plans include a 14-day free trial. No credit card required. Cancel anytime.
-              </p>
+            {/* Platform Highlights - No fake testimonials */}
+            <div className="text-center">
+              <h3 className="text-2xl sm:text-3xl font-black text-white mb-8">Built for Professional Traders</h3>
+              <div className="grid md:grid-cols-3 gap-6">
+                {[
+                  {
+                    title: 'Institutional-Grade Analysis',
+                    desc: 'The same gamma exposure, liquidity mapping, and smart money tracking used by hedge funds.',
+                    icon: '🎯'
+                  },
+                  {
+                    title: '18-Engine Fusion System',
+                    desc: 'Multiple AI models working in parallel to eliminate blind spots in your analysis.',
+                    icon: '🧠'
+                  },
+                  {
+                    title: 'UK-Based & FCA Aware',
+                    desc: 'Headquartered in London. Research platform designed with regulatory compliance in mind.',
+                    icon: '🇬🇧'
+                  }
+                ].map((item, i) => (
+                  <div key={i} className="p-6 bg-white/[0.02] border border-gray-800 rounded-2xl hover:bg-white/[0.04] transition-all text-center">
+                    <span className="text-3xl mb-4 block">{item.icon}</span>
+                    <h4 className="text-lg font-bold text-white mb-2">{item.title}</h4>
+                    <p className="text-gray-400 text-sm">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
+
+        {/* ROI CALCULATOR SECTION */}
+        <ROICalculator />
 
         {/* COMPARISON TABLE SECTION */}
         <section id="comparison" className="py-40 px-6 relative">
@@ -887,7 +1112,7 @@ export default function LandingPage() {
                     { feature: 'AI Copilot (GPT-4)', finscan: true, tv: false, fiscal: true, alpha: true },
                     { feature: 'Macro Regime Detection', finscan: true, tv: false, fiscal: false, alpha: false },
                     { feature: 'Unified Terminal (All-in-One)', finscan: true, tv: false, fiscal: false, alpha: false },
-                    { feature: '9 AI Engines', finscan: true, tv: false, fiscal: false, alpha: false },
+                    { feature: '18 AI Engines', finscan: true, tv: false, fiscal: false, alpha: false },
                     { feature: 'Multi-Timeframe Analysis', finscan: true, tv: 'partial', fiscal: false, alpha: false }
                   ] as Array<{feature: string; finscan: boolean | string; tv: boolean | string; fiscal: boolean | string; alpha: boolean | string}>).map((row, i) => (
                     <tr key={i} className="border-b border-gray-900 hover:bg-white/[0.02] transition-colors">
@@ -1130,7 +1355,7 @@ export default function LandingPage() {
             <div className="mt-16 grid md:grid-cols-4 gap-6">
               {[
                 { icon: Zap, title: 'Real-Time', desc: '<100ms latency' },
-                { icon: Brain, title: '9 AI Engines', desc: 'Multi-model consensus' },
+                { icon: Brain, title: '18 AI Engines', desc: 'Multi-model consensus' },
                 { icon: Shield, title: 'FCA Compliant', desc: 'UK research platform' },
                 { icon: Activity, title: '24/7 Monitoring', desc: 'Global market coverage' }
               ].map((item, i) => (
@@ -1156,7 +1381,7 @@ export default function LandingPage() {
             <div className="grid md:grid-cols-2 gap-8">
               {[
                 { icon: Globe, title: 'UK-Based', desc: 'Headquartered in the UK with full FCA compliance. Research platform designed for global professional traders.' },
-                { icon: Brain, title: 'AI-First Fintech', desc: '9 specialized AI engines working in parallel. Multi-engine architecture for maximum accuracy and confidence.' },
+                { icon: Brain, title: 'AI-First Fintech', desc: '18 specialized AI engines working in parallel. Multi-engine architecture for maximum accuracy and confidence.' },
                 { icon: Shield, title: 'Institutional-Grade', desc: 'Built to standards used by trading firms. Enterprise reliability (99.9% uptime), real-time processing (<100ms latency).' },
                 { icon: Building2, title: 'Global Coverage', desc: 'Multi-asset support (equities, forex, metals, crypto). 30,000+ companies, institutional-grade data, worldwide market coverage.' }
               ].map((item, i) => (
@@ -1182,168 +1407,6 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Legacy Pricing Section (kept for reference, not linked) */}
-        <section id="pricing-legacy" className="py-24 sm:py-32 lg:py-40 px-4 sm:px-6 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
-
-            <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-24">
-              <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/[0.03] border border-gray-800 rounded-full mb-8 backdrop-blur-xl">
-                <span className="text-sm font-semibold text-gray-300">
-                  Simple, Transparent Pricing
-                </span>
-              </div>
-              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight text-white">
-                Choose Your Plan
-              </h2>
-              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto font-light">
-                Professional-grade intelligence at prices that make sense. No hidden fees.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
-              {/* Starter Tier */}
-              <div className="group relative p-8 bg-white/[0.02] backdrop-blur-xl border border-gray-800 rounded-3xl hover:bg-white/[0.05] hover:border-gray-600 transition-all duration-500 hover:scale-[1.03] hover:-translate-y-2">
-                <div className="mb-8">
-                  <h3 className="text-2xl font-black mb-2 text-white">Starter</h3>
-                  <p className="text-sm text-gray-400">For individual analysts</p>
-                </div>
-
-                <div className="mb-8">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-black text-gray-200">£49</span>
-                    <span className="text-gray-400">/month</span>
-                  </div>
-                </div>
-
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-300">5 analyses per day</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-300">Basic fundamentals</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-300">AI copilot (limited)</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-300">Email support</span>
-                  </li>
-                </ul>
-
-              <Link
-                href="https://app.sniperiq.ai/register"
-                  className="block w-full py-4 bg-white/[0.05] hover:bg-white/[0.1] border border-gray-700 hover:border-gray-600 rounded-xl font-bold text-center transition-all duration-300"
-                >
-                  Get Started
-                </Link>
-              </div>
-
-              {/* Professional Tier - RECOMMENDED */}
-              <div className="group relative p-8 bg-gradient-to-br from-gray-500/10 via-white/[0.05] to-gray-500/10 backdrop-blur-xl border-2 border-gray-400 rounded-3xl hover:border-gray-300 transition-all duration-500 scale-105 hover:scale-110 shadow-2xl shadow-gray-500/20">
-                {/* Recommended badge */}
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-gray-300 to-gray-500 text-black text-xs font-black rounded-full uppercase tracking-wider">
-                  Most Popular
-                </div>
-
-                <div className="mb-8">
-                  <h3 className="text-2xl font-black mb-2 text-white">Professional</h3>
-                  <p className="text-sm text-gray-300">For research teams</p>
-                </div>
-
-                <div className="mb-8">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-black text-white">£149</span>
-                    <span className="text-gray-300">/month</span>
-                  </div>
-                </div>
-
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-white font-semibold">Unlimited analyses</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-white font-semibold">All 9 AI engines</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-white font-semibold">Full fundamentals access</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-white font-semibold">AI copilot (unlimited)</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-white font-semibold">Priority support</span>
-                  </li>
-                </ul>
-
-                <Link
-                  href="https://app.sniperiq.ai/register"
-                  className="block w-full py-4 bg-gradient-to-r from-gray-200 to-gray-400 hover:from-gray-100 hover:to-gray-300 text-black rounded-xl font-black text-center transition-all duration-300 shadow-lg shadow-gray-500/30"
-                >
-                  Start Free Trial
-                </Link>
-              </div>
-
-              {/* Enterprise Tier */}
-              <div className="group relative p-8 bg-white/[0.02] backdrop-blur-xl border border-gray-800 rounded-3xl hover:bg-white/[0.05] hover:border-gray-600 transition-all duration-500 hover:scale-[1.03] hover:-translate-y-2">
-                <div className="mb-8">
-                  <h3 className="text-2xl font-black mb-2 text-white">Enterprise</h3>
-                  <p className="text-sm text-gray-400">For institutions</p>
-                </div>
-
-                <div className="mb-8">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-black text-gray-200">£299</span>
-                    <span className="text-gray-400">/month</span>
-                  </div>
-                </div>
-
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-300">Everything in Professional</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-300">Custom alerts</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-300">Dedicated support</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-gray-300">White-label options</span>
-                  </li>
-                </ul>
-
-                <Link
-                  href="https://app.sniperiq.ai/register"
-                  className="block w-full py-4 bg-white/[0.05] hover:bg-white/[0.1] border border-gray-700 hover:border-gray-600 rounded-xl font-bold text-center transition-all duration-300"
-                >
-                  Contact Sales
-                </Link>
-              </div>
-            </div>
-
-            {/* Pricing FAQ/Note */}
-            <div className="mt-16 text-center">
-              <p className="text-sm text-gray-400">
-                All plans include 14-day free trial • No credit card required • Cancel anytime
-              </p>
-            </div>
-          </div>
-        </section>
-
         {/* Final CTA */}
         <section className="py-24 sm:py-32 lg:py-40 px-4 sm:px-6">
           <div className="max-w-5xl mx-auto">
@@ -1362,13 +1425,13 @@ export default function LandingPage() {
                   Join professional traders using SniperIQ Terminal for institutional-grade intelligence.
                 </p>
 
-                <Link
-                  href="https://app.sniperiq.ai/register"
+                <a
+                  href="https://app.sniperiq.ai/"
                   className="group inline-flex items-center gap-3 px-12 py-6 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-2xl font-bold text-xl transition-all duration-500 hover:scale-110 hover:shadow-[0_0_100px_rgba(192,192,192,0.6)]"
                 >
                   <span>Launch Terminal</span>
                   <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-                </Link>
+                </a>
 
                 <p className="text-sm text-gray-500 mt-6 font-light">14-day free trial • No credit card required</p>
               </div>
@@ -1393,11 +1456,9 @@ export default function LandingPage() {
                   </span>
                 </div>
                 <p className="text-sm text-gray-400 mb-3">
-                  Institutional-grade financial analysis platform powered by 9 AI engines.
+                  Institutional-grade financial analysis platform powered by 18 AI engines.
                 </p>
-                <p className="text-xs text-gray-500">
-                  A product of Eagle Digital Services Ltd
-                </p>
+                {/* Company registration details can be added here if needed */}
               </div>
 
               {/* Product */}
@@ -1407,22 +1468,22 @@ export default function LandingPage() {
                 </h3>
                 <ul className="space-y-2 text-sm">
                   <li>
-                    <a href="https://app.sniperiq.ai/dashboard" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://app.sniperiq.ai/" className="text-gray-400 hover:text-white transition-colors">
                       Dashboard
                     </a>
                   </li>
                   <li>
-                    <a href="https://app.sniperiq.ai/portfolio" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://app.sniperiq.ai/" className="text-gray-400 hover:text-white transition-colors">
                       Portfolio
                     </a>
                   </li>
                   <li>
-                    <a href="https://app.sniperiq.ai/research" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://app.sniperiq.ai/" className="text-gray-400 hover:text-white transition-colors">
                       Research
                     </a>
                   </li>
                   <li>
-                    <a href="https://app.sniperiq.ai/settings" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://app.sniperiq.ai/" className="text-gray-400 hover:text-white transition-colors">
                       Settings
                     </a>
                   </li>
@@ -1436,12 +1497,12 @@ export default function LandingPage() {
                 </h3>
                 <ul className="space-y-2 text-sm">
                   <li>
-                    <Link href="/about" className="text-gray-400 hover:text-white transition-colors">
+                    <Link to="/about" className="text-gray-400 hover:text-white transition-colors">
                       About
                     </Link>
                   </li>
                   <li>
-                    <Link href="/blog" className="text-gray-400 hover:text-white transition-colors">
+                    <Link to="/blog" className="text-gray-400 hover:text-white transition-colors">
                       Blog
                     </Link>
                   </li>
@@ -1451,7 +1512,7 @@ export default function LandingPage() {
                     </a>
                   </li>
                   <li>
-                    <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
+                    <Link to="/contact" className="text-gray-400 hover:text-white transition-colors">
                       Contact
                     </Link>
                   </li>
@@ -1465,17 +1526,17 @@ export default function LandingPage() {
                 </h3>
                 <ul className="space-y-2 text-sm">
                   <li>
-                    <Link href="/privacy" className="text-gray-400 hover:text-white transition-colors">
+                    <Link to="/privacy" className="text-gray-400 hover:text-white transition-colors">
                       Privacy
                     </Link>
                   </li>
                   <li>
-                    <Link href="/terms" className="text-gray-400 hover:text-white transition-colors">
+                    <Link to="/terms" className="text-gray-400 hover:text-white transition-colors">
                       Terms
                     </Link>
                   </li>
                   <li>
-                    <Link href="/disclaimer" className="text-gray-400 hover:text-white transition-colors">
+                    <Link to="/disclaimer" className="text-gray-400 hover:text-white transition-colors">
                       Disclaimer
                     </Link>
                   </li>
@@ -1501,16 +1562,7 @@ export default function LandingPage() {
               <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
                 <p>© {new Date().getFullYear()} Eagle Digital Services Ltd. All rights reserved.</p>
                 <div className="flex items-center gap-4">
-                  <a
-                    href="https://find-and-update.company-information.service.gov.uk/company/16584009"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-500 hover:text-gray-300 transition-colors text-xs underline"
-                  >
-                    Companies House
-                  </a>
-                  <span>•</span>
-                    <span className="text-xs">sniperiq.ai</span>
+                  <span className="text-xs">Company No. 16584009 • Registered in England & Wales</span>
                 </div>
               </div>
             </div>

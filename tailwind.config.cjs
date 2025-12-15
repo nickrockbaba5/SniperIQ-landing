@@ -2,6 +2,7 @@
 module.exports = {
   content: [
     './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './index.html',
   ],
   darkMode: ['class', '.finscan-dark'],
   theme: {
