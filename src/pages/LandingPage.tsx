@@ -7,6 +7,10 @@ import {
 } from 'lucide-react';
 import { redirectToCheckout, type TierName } from '../lib/stripe';
 import ROICalculator from '../components/ROICalculator';
+import MockDashboard from '../components/MockDashboard';
+import MockResearchWorkspace from '../components/MockResearchWorkspace';
+import MockCopilot from '../components/MockCopilot';
+import MockPlatformPreview from '../components/MockPlatformPreview';
 
 export default function LandingPage() {
   const [scrollY, setScrollY] = useState(0);
@@ -591,15 +595,9 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* Dashboard Screenshot with Glassmorphism */}
-                <div className="mb-6 relative group overflow-hidden rounded-xl sm:rounded-2xl">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-xl border border-white/10" />
-                  <img
-                    src="/images/screenshots/dashboard-institutional.png"
-                    alt="Institutional Trade Intelligence Dashboard showing BEARISH signal for AAPL"
-                    className="w-full h-auto rounded-xl sm:rounded-2xl shadow-2xl group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                {/* Animated Dashboard Component */}
+                <div className="mb-6">
+                  <MockDashboard />
                 </div>
 
                 {/* Features grid */}
@@ -649,15 +647,9 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* Research Workspace Screenshot with Glassmorphism */}
-                <div className="mb-6 relative group overflow-hidden rounded-xl sm:rounded-2xl">
-                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 backdrop-blur-xl border border-white/10" />
-                  <img
-                    src="/images/screenshots/research-workspace.png"
-                    alt="Research Workspace showing AAPL financial statements and metrics"
-                    className="w-full h-auto rounded-xl sm:rounded-2xl shadow-2xl group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                {/* Animated Research Workspace Component */}
+                <div className="mb-6">
+                  <MockResearchWorkspace />
                 </div>
 
                 {/* Features grid */}
@@ -702,15 +694,9 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* Comparison Table Screenshot with Glassmorphism */}
-                <div className="mb-6 relative group overflow-hidden rounded-xl sm:rounded-2xl">
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-orange-500/20 backdrop-blur-xl border border-white/10" />
-                  <img
-                    src="/images/screenshots/comparison-table.png"
-                    alt="SniperIQ vs Competitors Comparison showing institutional advantages"
-                    className="w-full h-auto rounded-xl sm:rounded-2xl shadow-2xl group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                {/* Animated AI Copilot Component */}
+                <div className="mb-6">
+                  <MockCopilot />
                 </div>
 
                 {/* Features grid */}
@@ -756,17 +742,10 @@ export default function LandingPage() {
               </p>
             </div>
 
-            {/* Institutional Engine Screenshot with Enhanced Glassmorphism */}
+            {/* Animated Platform Preview Component */}
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-700" />
-              <div className="relative overflow-hidden rounded-2xl border border-white/20 backdrop-blur-2xl bg-white/5">
-                <img
-                  src="/images/screenshots/institutional-engine.png"
-                  alt="Institutional Intelligence Engine breakdown showing detailed analysis"
-                  className="w-full h-auto group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-              </div>
+              <MockPlatformPreview />
             </div>
           </div>
         </section>
