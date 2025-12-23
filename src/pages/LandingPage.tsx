@@ -1353,11 +1353,11 @@ export default function LandingPage() {
               {/* Brand */}
               <div>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-9 h-9 bg-gradient-to-br from-gray-300 to-gray-500 rounded-xl p-[1px]">
-                    <div className="w-full h-full bg-black rounded-xl flex items-center justify-center">
-                      <Brain className="w-5 h-5 text-gray-300" />
-                    </div>
-                  </div>
+                  <img
+                    src="/logo-sniperiq.png"
+                    alt="SniperIQ logo"
+                    className="w-9 h-9 rounded-xl shadow-lg shadow-gray-500/50 object-contain"
+                  />
                   <span className="text-xl font-black">
                     SNIPER<span className="text-gray-300">IQ</span>
                   </span>
@@ -1365,7 +1365,6 @@ export default function LandingPage() {
                 <p className="text-sm text-gray-400 mb-3">
                   Institutional-grade financial analysis platform powered by 18 AI engines.
                 </p>
-                {/* Company registration details can be added here if needed */}
               </div>
 
               {/* Product */}
@@ -1456,27 +1455,8 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Company Registration Info */}
-            <div className="pt-8 border-t border-gray-900 mb-6">
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 text-xs text-gray-600">
-                <p>Eagle Digital Services Ltd</p>
-                <span className="hidden sm:inline">•</span>
-                <p>Company No. 16584009</p>
-                <span className="hidden sm:inline">•</span>
-                <p>Registered in England & Wales</p>
-              </div>
-              <p className="text-center text-xs text-gray-600 mt-2">
-                71-75 Shelton Street, Covent Garden, London, WC2H 9JQ
-              </p>
-            </div>
-
-            <div className="pt-6 border-t border-gray-900">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
-                <p>© {new Date().getFullYear()} Eagle Digital Services Ltd. All rights reserved.</p>
-                <div className="flex items-center gap-4">
-                  <span className="text-xs">Company No. 16584009 • Registered in England & Wales</span>
-                </div>
-              </div>
+            <div className="pt-8 border-t border-gray-900">
+              <p className="text-sm text-gray-500">© {new Date().getFullYear()} Eagle Digital Services Ltd. All rights reserved.</p>
             </div>
           </div>
         </footer>
