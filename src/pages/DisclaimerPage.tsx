@@ -59,6 +59,41 @@ export default function DisclaimerPage() {
               SniperIQ is a software and information service provider. We are not authorized or regulated by the Financial Conduct Authority (FCA). Our services do not constitute regulated investment advice.
             </p>
           </section>
+
+          <section>
+            <h2 className="text-2xl font-bold text-white mb-4">Data Source Transparency</h2>
+
+            <h3 className="text-lg font-semibold text-white mb-2">Synthetic vs. Real Data</h3>
+            <p className="text-gray-400 mb-4">
+              SniperIQ employs both real market data and derived analytical approximations. Users must understand the distinction.
+            </p>
+
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mb-4">
+              <h4 className="font-semibold text-blue-300 mb-2">Real Data Sources:</h4>
+              <ul className="list-disc list-inside text-gray-400 space-y-1">
+                <li>Price/volume from Financial Modeling Prep (FMP)</li>
+                <li>Historical OHLCV for technical analysis</li>
+                <li>Economic calendar events</li>
+                <li>Company financial statements (equities only)</li>
+              </ul>
+            </div>
+
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
+              <h4 className="font-semibold text-amber-300 mb-2">Synthetic Approximations:</h4>
+              <ul className="list-disc list-inside text-gray-400 space-y-1">
+                <li>Options signals (calculated from volatility, NOT direct exchange data)</li>
+                <li>Gamma exposure (estimated from price action, NOT options chain data)</li>
+                <li>Dark pool activity (derived from volume patterns, NOT Level 2 tape)</li>
+                <li>COT positioning (momentum-based estimates, NOT CFTC reports)</li>
+              </ul>
+            </div>
+
+            <div className="mt-4 p-4 bg-gray-900/50 border border-gray-700 rounded-lg">
+              <p className="text-gray-400 text-sm leading-relaxed">
+                <strong className="text-amber-300">Important Notice:</strong> Synthetic signals are mathematical approximations derived from real price data, NOT direct feeds from exchanges or institutional sources. They serve educational and research purposes and may not accurately represent actual market conditions. For institutional-grade data with direct feeds, upgrade to Professional tier.
+              </p>
+            </div>
+          </section>
         </div>
       </div>
     </div>
