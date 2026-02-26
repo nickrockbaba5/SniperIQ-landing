@@ -18,7 +18,8 @@ export interface CheckoutSessionResponse {
 export async function createCheckoutSession(
   tier: TierName,
   billingPeriod: 'monthly' | 'yearly',
-  email?: string
+  email?: string,
+  currency: 'gbp' | 'usd' = 'gbp'
 ): Promise<CheckoutSessionResponse> {
   if (tier === 'free' || tier === 'enterprise') {
     throw new Error('No pricing available for tier: ' + tier)
@@ -35,8 +36,9 @@ export async function createCheckoutSession(
     },
     body: JSON.stringify({
       price_id: priceIdKey,
+      currency,
       email: email,
-      success_url: 'https://app.sniperiq.ai/dashboard?payment=success',
+      success_url: 'https://app.sniperiq.ai/settings?payment=success',
       cancel_url: 'https://sniperiq.ai/?payment=cancelled',
     }),
   })
@@ -59,10 +61,11 @@ export async function createCheckoutSession(
 export async function redirectToCheckout(
   tier: TierName,
   billingPeriod: 'monthly' | 'yearly',
-  email?: string
+  email?: string,
+  currency: 'gbp' | 'usd' = 'gbp'
 ): Promise<void> {
   try {
-    const session = await createCheckoutSession(tier, billingPeriod, email)
+    const session = await createCheckoutSession(tier, billingPeriod, email, currency)
     window.location.href = session.url
   } catch (error) {
     console.error('Checkout error:', error)

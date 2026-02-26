@@ -1014,7 +1014,7 @@ export default function LandingPage() {
               {/* Trust Text */}
               <div className="text-center space-y-2">
                 <p className="text-xs sm:text-sm text-gray-400">
-                  All plans include a <span className="text-white font-semibold">14-day free trial</span>. No credit card required. Cancel anytime.
+                  All paid plans include a <span className="text-white font-semibold">14-day money-back guarantee</span>. Cancel within 14 days for a full refund.
                 </p>
                 <p className="text-xs sm:text-sm text-gray-500">
                   * Yearly plans save you 17% compared to monthly billing. Prices shown in {currency}.
@@ -1341,7 +1341,7 @@ export default function LandingPage() {
                   <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
                 </a>
 
-                <p className="text-sm text-gray-500 mt-6 font-light">14-day free trial • No credit card required</p>
+                <p className="text-sm text-gray-500 mt-6 font-light">14-day money-back guarantee • <a href="/refund-policy" className="underline hover:text-gray-300">Refund policy</a></p>
               </div>
             </div>
           </div>

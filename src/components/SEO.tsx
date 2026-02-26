@@ -136,6 +136,13 @@ export const PAGE_SEO = {
     canonical: `${BASE_URL}/disclaimer`,
     noIndex: false,
   },
+  refund: {
+    title: 'Refund Policy - SniperIQ',
+    description: 'SniperIQ 14-day money-back guarantee. Request a full refund within 14 days of purchase, no questions asked. Learn about our refund policy and process.',
+    keywords: 'refund policy, money-back guarantee, SniperIQ refund, subscription cancellation, 14-day guarantee',
+    canonical: `${BASE_URL}/refund-policy`,
+    noIndex: false,
+  },
 }
 
 // Structured data templates

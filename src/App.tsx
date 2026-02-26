@@ -5,6 +5,7 @@ import ContactPage from './pages/ContactPage'
 import TermsPage from './pages/TermsPage'
 import PrivacyPage from './pages/PrivacyPage'
 import DisclaimerPage from './pages/DisclaimerPage'
+import RefundPage from './pages/RefundPage'
 import EngineStackPage from './pages/EngineStackPage'
 import ComparePage from './pages/ComparePage'
 
@@ -17,6 +18,7 @@ function App() {
       <Route path="/terms" element={<TermsPage />} />
       <Route path="/privacy" element={<PrivacyPage />} />
       <Route path="/disclaimer" element={<DisclaimerPage />} />
+      <Route path="/refund-policy" element={<RefundPage />} />
       <Route path="/engines" element={<EngineStackPage />} />
       <Route path="/compare" element={<ComparePage />} />
       {/* Redirect research and screener to app */}
