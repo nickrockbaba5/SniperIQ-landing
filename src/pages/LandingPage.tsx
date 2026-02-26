@@ -231,6 +231,7 @@ export default function LandingPage() {
                 <Link to="/screener" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Screener</Link>
                 <Link to="/research/AAPL" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Research</Link>
                 <Link to="/engines" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Engines</Link>
+                <Link to="/compare" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Compare</Link>
                 <a href="#modules" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Platform</a>
                 <a href="#pricing" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Pricing</a>
               </nav>
@@ -695,7 +696,7 @@ export default function LandingPage() {
                 <div className="flex items-center gap-3 mt-8 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl">
                   <Check className="w-5 h-5 text-emerald-400" />
                   <p className="text-sm text-emerald-300 font-medium">
-                    <span className="font-bold">Quant + Fundamentals + AI</span> — comparable to Fiscal.ai, but integrated with trading intelligence
+                    <span className="font-bold">Quant + Fundamentals + AI</span> — institutional-level analysis, fully integrated with trading intelligence
                   </p>
                 </div>
               </div>
@@ -1096,9 +1097,9 @@ export default function LandingPage() {
                   <tr className="border-b-2 border-gray-800">
                     <th className="text-left p-6 text-gray-400 font-bold uppercase tracking-wide text-sm">Feature</th>
                     <th className="text-center p-6 text-white font-black text-lg">SniperIQ</th>
-                    <th className="text-center p-6 text-gray-400 font-medium text-sm">TradingView</th>
-                    <th className="text-center p-6 text-gray-400 font-medium text-sm">Fiscal.ai</th>
-                    <th className="text-center p-6 text-gray-400 font-medium text-sm">AlphaResearch</th>
+                    <th className="text-center p-6 text-gray-400 font-medium text-sm">Competitor A</th>
+                    <th className="text-center p-6 text-gray-400 font-medium text-sm">Competitor B</th>
+                    <th className="text-center p-6 text-gray-400 font-medium text-sm">Competitor C</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1152,7 +1153,7 @@ export default function LandingPage() {
                   <h3 className="text-2xl font-black text-white mb-2">The Unified Institutional Terminal</h3>
                   <p className="text-gray-400">
                     SniperIQ is the <span className="text-white font-semibold">only platform</span> that combines institutional trading intelligence (ICT, gamma, liquidity),
-                    company fundamentals (Fiscal.ai-level), and AI research copilot in a single, integrated terminal.
+                    company fundamentals (institutional-level), and AI research copilot in a single, integrated terminal.
                     Stop switching between 5 different tools.
                   </p>
                 </div>
@@ -1410,6 +1411,11 @@ export default function LandingPage() {
                   <li>
                     <Link to="/engines" className="text-gray-400 hover:text-white transition-colors">
                       Engine Stack
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/compare" className="text-gray-400 hover:text-white transition-colors">
+                      Compare
                     </Link>
                   </li>
                   <li>

@@ -6,6 +6,7 @@ import TermsPage from './pages/TermsPage'
 import PrivacyPage from './pages/PrivacyPage'
 import DisclaimerPage from './pages/DisclaimerPage'
 import EngineStackPage from './pages/EngineStackPage'
+import ComparePage from './pages/ComparePage'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/privacy" element={<PrivacyPage />} />
       <Route path="/disclaimer" element={<DisclaimerPage />} />
       <Route path="/engines" element={<EngineStackPage />} />
+      <Route path="/compare" element={<ComparePage />} />
       {/* Redirect research and screener to app */}
       <Route path="/research/*" element={<RedirectToApp path="research" />} />
       <Route path="/screener" element={<RedirectToApp path="screener" />} />

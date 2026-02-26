@@ -1,6 +1,6 @@
 /**
  * SEO Component - Dynamic meta tags for each page
- * Implements best practices from stockanalysis.com, fiscal.ai, TIKR
+ * Implements SEO best practices for financial platforms
  */
 
 import { Helmet } from 'react-helmet-async'
