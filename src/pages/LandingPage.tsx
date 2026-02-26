@@ -19,7 +19,7 @@ export default function LandingPage() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [liveStats, setLiveStats] = useState({
     analyses: 127543,
-    engines: 18,
+    engines: 21,
     accuracy: 94.2,
     uptime: 99.9
   });
@@ -96,7 +96,7 @@ export default function LandingPage() {
       originalPrice: { monthly: 119, yearly: 1188 },
       pricePerDay: { monthly: '£3.30', yearly: '£2.71' },
       description: 'Professional trading suite',
-      features: ['50 analyses/day', '100 AI queries/day', '50 exports/month', 'All 18 AI engines', 'Full fundamentals', 'Real-time data'],
+      features: ['50 analyses/day', '100 AI queries/day', '50 exports/month', 'All 21 AI engines', 'Full fundamentals', 'Real-time data'],
       cta: 'Get 15 FREE Analysis Credits',
       popular: true,
       badge: 'BEST VALUE - SAVE £198/YEAR',
@@ -108,7 +108,7 @@ export default function LandingPage() {
       originalPrice: { monthly: 239, yearly: 2388 },
       pricePerDay: { monthly: '£6.63', yearly: '£5.45' },
       description: 'Institutional-grade intelligence',
-      features: ['200 analyses/day', '500 AI queries/day', '200 exports/month', 'All 18 AI engines', 'Premium fundamentals', 'Real-time data + API access'],
+      features: ['200 analyses/day', '500 AI queries/day', '200 exports/month', 'All 21 AI engines', 'Premium fundamentals', 'Real-time data + API access'],
       cta: 'Start Free Trial',
       popular: false,
       badge: 'SAVE £398/YEAR',
@@ -120,7 +120,7 @@ export default function LandingPage() {
       originalPrice: null,
       pricePerDay: null,
       description: 'Custom enterprise solutions',
-      features: ['Unlimited analyses', 'Unlimited AI queries', 'Unlimited exports', 'All 18 AI engines', 'Premium fundamentals', 'Real-time data', 'Dedicated support', 'White-label options'],
+      features: ['Unlimited analyses', 'Unlimited AI queries', 'Unlimited exports', 'All 21 AI engines', 'Premium fundamentals', 'Real-time data', 'Dedicated support', 'White-label options'],
       cta: 'Contact Sales',
       ctaLink: 'mailto:enterprise@sniperiq.ai?subject=SniperIQ%20Enterprise%20Plan',
       popular: false,
@@ -289,7 +289,7 @@ export default function LandingPage() {
 
             {/* Subheadline - Compact for mobile */}
             <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-4 leading-relaxed">
-              One platform powered by <span className="text-white font-semibold">18 AI engines</span>, comprehensive fundamentals and real-time liquidity intelligence.
+              One platform powered by <span className="text-white font-semibold">21 AI engines</span>, comprehensive fundamentals and real-time liquidity intelligence.
             </p>
 
             <p className="text-xs sm:text-sm md:text-base text-gray-500 max-w-3xl mx-auto mb-10 leading-relaxed">
@@ -339,7 +339,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* 18 AI ENGINES SHOWCASE SECTION */}
+        {/* 21 AI ENGINES SHOWCASE SECTION */}
         <section id="engines" className="py-32 px-6 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-500/[0.02] to-transparent" />
 
@@ -349,11 +349,11 @@ export default function LandingPage() {
               <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 rounded-full mb-6 backdrop-blur-xl">
                 <Cpu className="w-4 h-4 text-blue-400" />
                 <span className="text-sm font-semibold text-blue-300">
-                  18 Specialized AI Engines
+                  21 Specialized AI Engines
                 </span>
               </div>
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 tracking-tight text-white">
-                Powered by 18 AI Engines
+                Powered by 21 AI Engines
               </h2>
               <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">
                 Each engine is a specialized AI system trained on institutional-grade data. Working in concert to deliver unmatched trading and fundamental analysis.
@@ -520,7 +520,7 @@ export default function LandingPage() {
                   id: 18,
                   name: 'Research Copilot',
                   category: 'AI Assistant',
-                  description: 'GPT-4 powered research assistant with real-time data integration',
+                  description: 'AI-powered research assistant with real-time data integration',
                   icon: Lightbulb,
                   color: 'yellow',
                   gradient: 'from-yellow-600 to-yellow-400'
@@ -572,7 +572,7 @@ export default function LandingPage() {
             {/* Bottom CTA */}
             <div className="text-center mt-16">
               <p className="text-gray-400 mb-6 text-lg">
-                All 18 engines work in real-time to power your trading decisions
+                All 21 engines work in real-time to power your trading decisions
               </p>
               <a
                 href="https://app.sniperiq.ai/"
@@ -743,7 +743,7 @@ export default function LandingPage() {
                 <div className="flex items-center gap-3 mt-8 p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl">
                   <Brain className="w-5 h-5 text-amber-400" />
                   <p className="text-sm text-amber-300 font-medium">
-                    Powered by GPT-4 + unified research context from ML, macro, fundamentals & scenarios
+                    Powered by AI + unified research context from ML, macro, fundamentals & scenarios
                   </p>
                 </div>
               </div>
@@ -1032,7 +1032,7 @@ export default function LandingPage() {
               {[
                 { value: '500+', label: 'Active Traders', icon: '👥' },
                 { value: '125k+', label: 'Analyses Generated', icon: '📊' },
-                { value: '18', label: 'AI Engines', icon: '🤖' },
+                { value: '21', label: 'AI Engines', icon: '🤖' },
                 { value: '99.9%', label: 'Uptime SLA', icon: '⚡' },
               ].map((stat, i) => (
                 <div key={i} className="text-center p-6 bg-white/[0.02] border border-gray-800 rounded-2xl">
@@ -1054,7 +1054,7 @@ export default function LandingPage() {
                     icon: '🎯'
                   },
                   {
-                    title: '18-Engine Fusion System',
+                    title: '21-Engine Fusion System',
                     desc: 'Multiple AI models working in parallel to eliminate blind spots in your analysis.',
                     icon: '🧠'
                   },
@@ -1109,10 +1109,10 @@ export default function LandingPage() {
                     { feature: 'Gamma + Open Interest', finscan: true, tv: false, fiscal: false, alpha: false },
                     { feature: 'Financial Statements', finscan: true, tv: false, fiscal: true, alpha: true },
                     { feature: 'Ratios & Key Metrics', finscan: true, tv: false, fiscal: true, alpha: true },
-                    { feature: 'AI Copilot (GPT-4)', finscan: true, tv: false, fiscal: true, alpha: true },
+                    { feature: 'AI Copilot', finscan: true, tv: false, fiscal: true, alpha: true },
                     { feature: 'Macro Regime Detection', finscan: true, tv: false, fiscal: false, alpha: false },
                     { feature: 'Unified Terminal (All-in-One)', finscan: true, tv: false, fiscal: false, alpha: false },
-                    { feature: '18 AI Engines', finscan: true, tv: false, fiscal: false, alpha: false },
+                    { feature: '21 AI Engines', finscan: true, tv: false, fiscal: false, alpha: false },
                     { feature: 'Multi-Timeframe Analysis', finscan: true, tv: 'partial', fiscal: false, alpha: false }
                   ] as Array<{feature: string; finscan: boolean | string; tv: boolean | string; fiscal: boolean | string; alpha: boolean | string}>).map((row, i) => (
                     <tr key={i} className="border-b border-gray-900 hover:bg-white/[0.02] transition-colors">
@@ -1189,7 +1189,7 @@ export default function LandingPage() {
             <div className="mt-16 grid md:grid-cols-4 gap-6">
               {[
                 { icon: Zap, title: 'Real-Time', desc: '<100ms latency' },
-                { icon: Brain, title: '18 AI Engines', desc: 'Multi-model consensus' },
+                { icon: Brain, title: '21 AI Engines', desc: 'Multi-model consensus' },
                 { icon: Shield, title: 'FCA Compliant', desc: 'UK research platform' },
                 { icon: Activity, title: '24/7 Monitoring', desc: 'Global market coverage' }
               ].map((item, i) => (
@@ -1364,7 +1364,7 @@ export default function LandingPage() {
                   </span>
                 </div>
                 <p className="text-sm text-gray-400 mb-3">
-                  Institutional-grade financial analysis platform powered by 18 AI engines.
+                  Institutional-grade financial analysis platform powered by 21 AI engines.
                 </p>
               </div>
 

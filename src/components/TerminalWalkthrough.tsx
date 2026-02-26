@@ -24,7 +24,7 @@ const steps: WalkthroughStep[] = [
   },
   {
     id: 2,
-    title: '18 AI Engines Activate',
+    title: '21 AI Engines Activate',
     description: 'Our proprietary engines analyse the asset in real-time',
     highlight: 'engines',
     duration: 4000,
@@ -39,7 +39,7 @@ const steps: WalkthroughStep[] = [
   {
     id: 4,
     title: 'AI Generates Insights',
-    description: 'GPT-4 powered copilot synthesises all data into actionable analysis',
+    description: 'AI copilot synthesises all data into actionable analysis',
     highlight: 'ai',
     duration: 4000,
   },
@@ -233,7 +233,7 @@ export default function TerminalWalkthrough() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Layers className="w-4 h-4 text-cyan-400" />
-                  <span className="text-sm font-bold text-white">18 AI Engines</span>
+                  <span className="text-sm font-bold text-white">21 AI Engines</span>
                 </div>
                 <span className="text-xs text-emerald-400">All Active</span>
               </div>
@@ -355,7 +355,7 @@ export default function TerminalWalkthrough() {
                   {currentStepData.highlight === 'ai' ? (
                     <>
                       <div className="text-xs text-gray-300 animate-pulse">
-                        Analysing AAPL with 18 engines...
+                        Analysing AAPL with 21 engines...
                       </div>
                       <div className="h-2 bg-purple-500/30 rounded overflow-hidden">
                         <div
@@ -492,7 +492,7 @@ export default function TerminalWalkthrough() {
         {[
           {
             icon: Zap,
-            title: '18 AI Engines',
+            title: '21 AI Engines',
             desc: 'Real-time analysis from momentum to macro',
             color: 'emerald',
           },
@@ -505,7 +505,7 @@ export default function TerminalWalkthrough() {
           {
             icon: Brain,
             title: 'AI Copilot',
-            desc: 'GPT-4 powered research synthesis',
+            desc: 'AI-powered research synthesis',
             color: 'purple',
           },
         ].map((feature, i) => (

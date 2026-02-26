@@ -116,7 +116,7 @@ const categories: ComparisonCategory[] = [
     color: 'pink',
     rows: [
       { feature: 'LLM Voice + Text Assistant', sniperiq: true, tradingview: false, bloomberg: false, tikr: false, koyfin: false, fiscalai: 'Text only', metatrader: false },
-      { feature: 'REST API Access', sniperiq: '345+ endpoints', tradingview: 'Partial', bloomberg: true, tikr: false, koyfin: false, fiscalai: false, metatrader: false },
+      { feature: 'REST API Access', sniperiq: '399 endpoints', tradingview: 'Partial', bloomberg: true, tikr: false, koyfin: false, fiscalai: false, metatrader: false },
       { feature: 'WebSocket Real-Time Feeds', sniperiq: true, tradingview: true, bloomberg: true, tikr: false, koyfin: false, fiscalai: false, metatrader: true },
       { feature: 'Custom Price Alerts', sniperiq: true, tradingview: true, bloomberg: true, tikr: false, koyfin: 'Partial', fiscalai: false, metatrader: true },
       { feature: 'Portfolio Risk Analytics', sniperiq: true, tradingview: 'Watchlist', bloomberg: true, tikr: 'Watchlist', koyfin: true, fiscalai: false, metatrader: true },
@@ -162,7 +162,7 @@ const uniqueFeatures: UniqueFeature[] = [
   { title: 'NO_CALL Quality Gate', desc: 'System refuses to give a signal when conditions are insufficient. Intellectual honesty.', icon: Zap },
   { title: 'India NSE/MCX Dedicated ML', desc: 'No Western fintech platform offers India-specific institutional ML models.', icon: Globe },
   { title: 'Evidence Mode', desc: 'Transparent engine-by-engine reasoning for every signal generated.', icon: Layers },
-  { title: '345+ REST API Endpoints', desc: 'Full programmatic access to all 21 engines, screening, and data.', icon: BarChart3 },
+  { title: '399 REST API Endpoints', desc: 'Full programmatic access to all 21 engines, screening, and data.', icon: BarChart3 },
   { title: '6+ Data Provider Failover', desc: 'DataSourceRouter with automatic failover. No single provider dependency.', icon: Activity },
   { title: 'Engine Lab', desc: 'Experiment with individual engines and parameters on Advanced tier.', icon: TrendingUp },
   { title: 'LLM Voice Assistant', desc: 'Voice + text AI assistant powered by real-time engine outputs.', icon: MessageSquare },
@@ -323,7 +323,7 @@ export default function ComparePage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
               { value: '21', label: 'AI Engines', sub: 'vs 0-3 for competitors' },
-              { value: '345+', label: 'API Endpoints', sub: 'Full programmatic access' },
+              { value: '399', label: 'API Endpoints', sub: 'Full programmatic access' },
               { value: '90,000+', label: 'Assets Screened', sub: 'Multi-asset global coverage' },
               { value: '6+', label: 'Data Providers', sub: 'Auto-failover redundancy' },
             ].map((stat, i) => (

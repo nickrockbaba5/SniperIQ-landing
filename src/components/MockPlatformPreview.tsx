@@ -78,7 +78,7 @@ export default function MockPlatformPreview() {
               <div className="flex items-center gap-2 text-xs text-gray-400">
                 <span className="flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
-                  18 engines active
+                  21 engines active
                 </span>
                 <span>•</span>
                 <span>Real-time</span>
@@ -258,7 +258,7 @@ export default function MockPlatformPreview() {
           <div className="flex items-center gap-4 text-xs">
             <div className="flex items-center gap-2">
               <Cpu className="w-4 h-4 text-blue-400" />
-              <span className="text-gray-400">18/18 engines</span>
+              <span className="text-gray-400">21/21 engines</span>
             </div>
             <div className="flex items-center gap-2">
               <Globe className="w-4 h-4 text-green-400" />

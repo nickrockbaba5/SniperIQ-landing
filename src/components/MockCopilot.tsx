@@ -100,7 +100,7 @@ Price has moved above recent highs and is now retracing. The $880 area shows his
               <span className="text-lg font-bold text-white">AI Research Copilot</span>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-xs text-gray-500">Powered by GPT-4 + SniperIQ Context</span>
+                <span className="text-xs text-gray-500">Powered by SniperIQ AI</span>
               </div>
             </div>
           </div>
@@ -210,8 +210,8 @@ Price has moved above recent highs and is now retracing. The $880 area shows his
       <div className="relative px-4 py-3 border-t border-white/10 bg-black/40 backdrop-blur">
         <div className="flex items-center justify-between text-xs">
           <div className="flex items-center gap-4 text-gray-500">
-            <span>Context: <span className="text-amber-300">All 18 engines</span></span>
-            <span>Model: <span className="text-white">GPT-4 Turbo</span></span>
+            <span>Context: <span className="text-amber-300">All 21 engines</span></span>
+            <span>Model: <span className="text-white">SniperIQ AI</span></span>
           </div>
           <span className="text-gray-500">FCA-compliant responses</span>
         </div>
