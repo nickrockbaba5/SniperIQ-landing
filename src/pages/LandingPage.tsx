@@ -277,7 +277,7 @@ export default function LandingPage() {
             </div>
 
             {/* Main headline - Mobile first */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 leading-tight tracking-tight">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 leading-tight tracking-tight">
               <span className="block text-white">
                 Institutional-Grade AI Market Intelligence
               </span>
@@ -300,7 +300,7 @@ export default function LandingPage() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 mb-16">
               <a
                 href="https://app.sniperiq.ai/"
-                className="group relative px-8 py-4 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-xl font-bold text-lg overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(192,192,192,0.5)] flex items-center gap-2"
+                className="group relative px-6 sm:px-8 py-4 min-h-[48px] bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-xl font-bold text-base sm:text-lg overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(192,192,192,0.5)] flex items-center justify-center gap-2"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <span className="relative">Launch Terminal</span>
@@ -309,7 +309,7 @@ export default function LandingPage() {
 
               <a
                 href="#live-preview"
-                className="group px-10 py-5 bg-white/[0.03] hover:bg-white/[0.08] border border-gray-800 hover:border-gray-600 rounded-2xl font-bold text-xl transition-all duration-300 flex items-center gap-3 backdrop-blur-xl"
+                className="group px-6 sm:px-10 py-4 sm:py-5 min-h-[48px] bg-white/[0.03] hover:bg-white/[0.08] border border-gray-800 hover:border-gray-600 rounded-2xl font-bold text-base sm:text-xl transition-all duration-300 flex items-center justify-center gap-3 backdrop-blur-xl"
               >
                 <Play className="w-6 h-6 group-hover:scale-110 transition-transform" />
                 <span>Watch Demo</span>
@@ -792,12 +792,12 @@ export default function LandingPage() {
             </div>
 
             {/* Currency Toggle */}
-            <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
               {(['GBP', 'USD', 'INR'] as const).map((curr) => (
                 <button
                   key={curr}
                   onClick={() => setCurrency(curr)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`px-3 sm:px-4 py-2 min-h-[40px] rounded-lg text-sm font-medium transition-all ${
                     currency === curr
                       ? 'bg-gradient-to-r from-gray-200 to-gray-400 text-black'
                       : 'bg-white/[0.03] border border-gray-800 text-gray-400 hover:border-gray-600'
