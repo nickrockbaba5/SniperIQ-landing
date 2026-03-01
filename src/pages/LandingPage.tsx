@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   Brain, Zap, TrendingUp, Shield, Activity, BarChart3, Globe, ArrowRight, Play,
   Sparkles, Cpu, Target, ChevronRight, Check, DollarSign, LineChart,
-  TrendingDown, Layers, FileText, MessageSquare, Lightbulb, Building2, Clock, Loader2, Percent, HelpCircle, PieChart,
+  TrendingDown, Layers, FileText, MessageSquare, Lightbulb, Building2, Clock, Percent, HelpCircle, PieChart,
   Menu, X
 } from 'lucide-react';
 import type { TierName } from '../lib/stripe';
@@ -28,8 +28,7 @@ export default function LandingPage() {
   // Pricing state
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
   const [currency, setCurrency] = useState<'GBP' | 'USD' | 'INR'>('GBP');
-  const [checkoutLoading] = useState<string | null>(null);
-  const [checkoutError] = useState<string | null>(null);
+  // checkoutLoading/Error removed — checkout now happens in the app after auth
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Currency conversion rates (approximate)
@@ -868,13 +867,6 @@ export default function LandingPage() {
               </span>
             </div>
 
-            {/* Checkout Error */}
-            {checkoutError && (
-              <div className="max-w-md mx-auto mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm text-center animate-pulse">
-                {checkoutError}
-              </div>
-            )}
-
             {/* Pricing Cards Grid */}
             <div className="grid gap-6 lg:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-5 max-w-7xl mx-auto">
               {pricingTiers.map((tier) => {
@@ -883,7 +875,6 @@ export default function LandingPage() {
                   : tier.price.monthly;
                 const convertedPrice = Math.round(basePrice * currencyRates[currency]);
                 const price = convertedPrice;
-                const isLoading = checkoutLoading === tier.name;
                 const isPro = tier.popular;
 
                 return (
@@ -988,21 +979,13 @@ export default function LandingPage() {
                     ) : (
                       <button
                         onClick={() => handleSelectTier(tier.name)}
-                        disabled={isLoading}
                         className={`w-full py-3 rounded-xl font-semibold text-center text-sm transition-all duration-300 ${
                           isPro
                             ? 'bg-gradient-to-r from-gray-200 to-gray-400 hover:from-gray-100 hover:to-gray-300 text-black font-black shadow-lg shadow-gray-500/30'
                             : 'bg-white/[0.05] hover:bg-white/[0.1] border border-gray-700 hover:border-gray-500'
-                        } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        }`}
                       >
-                        {isLoading ? (
-                          <span className="flex items-center justify-center gap-2">
-                            <Loader2 className="w-4 h-4 animate-spin" />
-                            Processing...
-                          </span>
-                        ) : (
-                          tier.cta
-                        )}
+                        {tier.cta}
                       </button>
                     )}
                   </div>
@@ -1018,7 +1001,7 @@ export default function LandingPage() {
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                 </svg>
                 <p className="text-sm sm:text-base text-amber-300 font-semibold">
-                  <span className="text-amber-200 font-black">47 spots left</span> this month at current pricing • Price increases Jan 1st, 2026
+                  <span className="text-amber-200 font-black">Limited spots</span> at current pricing • 14-day money-back guarantee on all plans
                 </p>
               </div>
 
