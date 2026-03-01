@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import {
   Brain, Zap, TrendingUp, Shield, Activity, BarChart3, Globe, ArrowRight, Play,
   Sparkles, Cpu, Target, ChevronRight, Check, DollarSign, LineChart,
-  TrendingDown, Layers, FileText, MessageSquare, Lightbulb, Building2, Clock, Loader2, Percent, HelpCircle, PieChart
+  TrendingDown, Layers, FileText, MessageSquare, Lightbulb, Building2, Clock, Loader2, Percent, HelpCircle, PieChart,
+  Menu, X
 } from 'lucide-react';
-import { redirectToCheckout, type TierName } from '../lib/stripe';
+import type { TierName } from '../lib/stripe';
 import ROICalculator from '../components/ROICalculator';
 import MockDashboard from '../components/MockDashboard';
 import MockResearchWorkspace from '../components/MockResearchWorkspace';
@@ -27,15 +28,16 @@ export default function LandingPage() {
   // Pricing state
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
   const [currency, setCurrency] = useState<'GBP' | 'USD' | 'INR'>('GBP');
-  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
-  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [checkoutLoading] = useState<string | null>(null);
+  const [checkoutError] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Currency conversion rates (approximate)
   const currencyRates = { GBP: 1, USD: 1.27, INR: 105 };
   const currencySymbols = { GBP: '£', USD: '$', INR: '₹' };
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
+    const handleScroll = () => { setScrollY(window.scrollY); setMobileMenuOpen(false); };
     const handleMouse = (e: MouseEvent) => {
       setMousePos({
         x: (e.clientX / window.innerWidth - 0.5) * 20,
@@ -85,7 +87,7 @@ export default function LandingPage() {
       pricePerDay: { monthly: '£1.30', yearly: '£1.07' },
       description: 'Essential trading intelligence',
       features: ['10 analyses/day', '20 AI queries/day', '10 exports/month', '6 AI engines', 'Basic fundamentals', 'Delayed data'],
-      cta: 'Start Free Trial',
+      cta: 'Subscribe Now',
       popular: false,
       badge: 'SAVE £78/YEAR',
     },
@@ -97,7 +99,7 @@ export default function LandingPage() {
       pricePerDay: { monthly: '£3.30', yearly: '£2.71' },
       description: 'Professional trading suite',
       features: ['50 analyses/day', '100 AI queries/day', '50 exports/month', 'All 21 AI engines', 'Full fundamentals', 'Real-time data'],
-      cta: 'Get 15 FREE Analysis Credits',
+      cta: 'Subscribe Now',
       popular: true,
       badge: 'BEST VALUE - SAVE £198/YEAR',
     },
@@ -109,7 +111,7 @@ export default function LandingPage() {
       pricePerDay: { monthly: '£6.63', yearly: '£5.45' },
       description: 'Institutional-grade intelligence',
       features: ['200 analyses/day', '500 AI queries/day', '200 exports/month', 'All 21 AI engines', 'Premium fundamentals', 'Real-time data + API access'],
-      cta: 'Start Free Trial',
+      cta: 'Subscribe Now',
       popular: false,
       badge: 'SAVE £398/YEAR',
     },
@@ -128,10 +130,10 @@ export default function LandingPage() {
     },
   ];
 
-  // Handle Stripe checkout
-  const handleSelectTier = async (tierName: TierName) => {
+  // Handle plan selection — redirect to app with plan info for checkout after login
+  const handleSelectTier = (tierName: TierName) => {
     if (tierName === 'free') {
-      window.location.href = 'https://app.sniperiq.ai/';
+      window.location.href = 'https://app.sniperiq.ai/register';
       return;
     }
 
@@ -140,21 +142,12 @@ export default function LandingPage() {
       return;
     }
 
-    setCheckoutLoading(tierName);
-    setCheckoutError(null);
-
-    try {
-      await redirectToCheckout(tierName, billingCycle);
-    } catch (error) {
-      console.error('Checkout error:', error);
-      setCheckoutError(error instanceof Error ? error.message : 'Failed to start checkout');
-      // Fallback to registration page
-      setTimeout(() => {
-        window.location.href = 'https://app.sniperiq.ai/';
-      }, 2000);
-    } finally {
-      setCheckoutLoading(null);
-    }
+    // Redirect to app register with plan params — checkout happens after auth
+    const params = new URLSearchParams({
+      plan: tierName,
+      billing: billingCycle,
+    });
+    window.location.href = `https://app.sniperiq.ai/register?${params.toString()}`;
   };
 
   return (
@@ -226,26 +219,69 @@ export default function LandingPage() {
                 </span>
               </div>
 
-              {/* Nav */}
+              {/* Desktop Nav */}
               <nav className="hidden md:flex items-center gap-8">
-                <Link to="/screener" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Screener</Link>
-                <Link to="/research/AAPL" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Research</Link>
                 <Link to="/engines" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Engines</Link>
                 <Link to="/compare" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Compare</Link>
                 <a href="#modules" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Platform</a>
                 <a href="#pricing" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Pricing</a>
               </nav>
 
-              {/* CTA */}
-              <a
-                href="https://app.sniperiq.ai/"
-                className="group relative px-6 py-2.5 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-xl font-bold text-sm overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-gray-500/50"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative">Launch Terminal</span>
-              </a>
+              {/* Right side: CTA + Mobile hamburger */}
+              <div className="flex items-center gap-3">
+                {/* CTA */}
+                <a
+                  href="https://app.sniperiq.ai/"
+                  className="group relative px-4 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-gray-200 to-gray-400 text-black rounded-xl font-bold text-sm overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-gray-500/50"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="relative">Launch Terminal</span>
+                </a>
+
+                {/* Mobile hamburger */}
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+                  aria-label="Toggle menu"
+                >
+                  {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+                </button>
+              </div>
             </div>
           </div>
+
+          {/* Mobile dropdown menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden border-t border-gray-800 bg-black/95 backdrop-blur-2xl">
+              <nav className="flex flex-col px-4 py-4 space-y-1">
+                <a href="#pricing" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 rounded-lg text-white font-semibold bg-white/[0.05] hover:bg-white/[0.1] transition-colors">
+                  <DollarSign size={18} className="text-gray-400" />
+                  Pricing
+                </a>
+                <Link to="/engines" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/[0.05] transition-colors">
+                  <Cpu size={18} className="text-gray-500" />
+                  AI Engines
+                </Link>
+                <Link to="/compare" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/[0.05] transition-colors">
+                  <BarChart3 size={18} className="text-gray-500" />
+                  Compare Plans
+                </Link>
+                <a href="#modules" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/[0.05] transition-colors">
+                  <Layers size={18} className="text-gray-500" />
+                  Platform
+                </a>
+                <div className="border-t border-gray-800 my-2" />
+                <a
+                  href="#pricing"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-gray-200 to-gray-400 text-black font-bold text-sm transition-all hover:from-gray-100 hover:to-gray-300"
+                >
+                  Subscribe Now
+                  <ArrowRight size={16} />
+                </a>
+              </nav>
+            </div>
+          )}
         </header>
 
         {/* ENHANCED HERO - Full screen with terminal preview */}
