@@ -30,7 +30,7 @@ export default function AboutPage() {
 
           <h2 className="text-2xl font-bold text-white mt-12 mb-4">Our Mission</h2>
           <p className="text-gray-400">
-            We believe every trader deserves access to institutional-quality analysis. Our platform combines 18 specialized AI engines with comprehensive fundamental data to deliver insights previously available only to hedge funds and institutional investors.
+            We believe every trader deserves access to institutional-quality analysis. Our platform combines 21 specialized AI engines with comprehensive fundamental data to deliver insights previously available only to hedge funds and institutional investors.
           </p>
 
           <h2 className="text-2xl font-bold text-white mt-12 mb-4">Company Information</h2>

@@ -357,7 +357,7 @@ export default function LandingPage() {
               {[
                 { value: liveStats.analyses.toLocaleString(), label: 'Analyses Generated', icon: Activity },
                 { value: `${liveStats.engines} AI`, label: 'Engines Active', icon: Cpu },
-                { value: `${liveStats.accuracy}%`, label: 'Model Accuracy', icon: Target },
+                { value: `${liveStats.accuracy}%`, label: 'Model Confidence*', icon: Target },
                 { value: `${liveStats.uptime}%`, label: 'Uptime SLA', icon: Shield }
               ].map((stat, i) => (
                 <div key={i} className="group relative p-6 bg-white/[0.02] backdrop-blur-xl border border-gray-800 rounded-2xl hover:bg-white/[0.05] hover:border-gray-600 transition-all duration-500 hover:scale-105">
@@ -1036,14 +1036,14 @@ export default function LandingPage() {
                     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
                     <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-xs sm:text-sm text-gray-300 font-medium">FCA Compliant</span>
+                  <span className="text-xs sm:text-sm text-gray-300 font-medium">UK Regulated Company</span>
                 </div>
 
                 <div className="flex items-center gap-2 px-4 py-2 bg-white/[0.02] border border-gray-800 rounded-lg">
                   <svg className="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-xs sm:text-sm text-gray-300 font-medium">30-Day Money-Back Guarantee</span>
+                  <span className="text-xs sm:text-sm text-gray-300 font-medium">14-Day Money-Back Guarantee</span>
                 </div>
               </div>
 
@@ -1095,8 +1095,8 @@ export default function LandingPage() {
                     icon: '🧠'
                   },
                   {
-                    title: 'UK-Based & FCA Aware',
-                    desc: 'Headquartered in London. Research platform designed with regulatory compliance in mind.',
+                    title: 'UK-Based Company',
+                    desc: 'Headquartered in London. Research intelligence platform — not financial advice.',
                     icon: '🇬🇧'
                   }
                 ].map((item, i) => (
@@ -1226,7 +1226,7 @@ export default function LandingPage() {
               {[
                 { icon: Zap, title: 'Real-Time', desc: '<100ms latency' },
                 { icon: Brain, title: '21 AI Engines', desc: 'Multi-model consensus' },
-                { icon: Shield, title: 'FCA Compliant', desc: 'UK research platform' },
+                { icon: Shield, title: 'UK-Based', desc: 'Registered UK company' },
                 { icon: Activity, title: '24/7 Monitoring', desc: 'Global market coverage' }
               ].map((item, i) => (
                 <div key={i} className="text-center p-6 bg-white/[0.02] border border-gray-800 rounded-2xl hover:bg-white/[0.04] transition-all">
@@ -1250,8 +1250,8 @@ export default function LandingPage() {
 
             <div className="grid md:grid-cols-2 gap-8">
               {[
-                { icon: Globe, title: 'UK-Based', desc: 'Headquartered in the UK with full FCA compliance. Research platform designed for global professional traders.' },
-                { icon: Brain, title: 'AI-First Fintech', desc: '18 specialized AI engines working in parallel. Multi-engine architecture for maximum accuracy and confidence.' },
+                { icon: Globe, title: 'UK-Based', desc: 'Headquartered in the UK. Research intelligence platform designed for global professional traders. Not financial advice.' },
+                { icon: Brain, title: 'AI-First Fintech', desc: '21 specialized AI engines working in parallel. Multi-engine architecture for maximum accuracy and confidence.' },
                 { icon: Shield, title: 'Institutional-Grade', desc: 'Built to standards used by trading firms. Enterprise reliability (99.9% uptime), real-time processing (<100ms latency).' },
                 { icon: Building2, title: 'Global Coverage', desc: 'Multi-asset support (equities, forex, metals, crypto). 30,000+ companies, institutional-grade data, worldwide market coverage.' }
               ].map((item, i) => (
@@ -1455,16 +1455,6 @@ export default function LandingPage() {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/blog" className="text-gray-400 hover:text-white transition-colors">
-                      Blog
-                    </Link>
-                  </li>
-                  <li>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                      Careers
-                    </a>
-                  </li>
-                  <li>
                     <Link to="/contact" className="text-gray-400 hover:text-white transition-colors">
                       Contact
                     </Link>
@@ -1493,11 +1483,19 @@ export default function LandingPage() {
                       Disclaimer
                     </Link>
                   </li>
+                  <li>
+                    <Link to="/refund-policy" className="text-gray-400 hover:text-white transition-colors">
+                      Refund Policy
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>
 
-            <div className="pt-8 border-t border-gray-900">
+            <div className="pt-8 border-t border-gray-900 space-y-4">
+              <p className="text-xs text-gray-600 leading-relaxed">
+                <strong className="text-gray-500">Risk Disclaimer:</strong> SniperIQ is an analytical research tool provided for informational and educational purposes only. It does not constitute financial advice, investment recommendations, or an invitation to trade. Past performance and AI-generated analysis do not guarantee future results. Trading financial instruments carries significant risk, including the potential loss of your entire investment. You should not invest money you cannot afford to lose. SniperIQ is operated by Eagle Digital Services Ltd (Company No. 16584009) and is not authorised or regulated by the Financial Conduct Authority (FCA). Please read our <Link to="/disclaimer" className="underline hover:text-gray-400">full disclaimer</Link> before using this platform.
+              </p>
               <p className="text-sm text-gray-500">© {new Date().getFullYear()} Eagle Digital Services Ltd. All rights reserved.</p>
             </div>
           </div>
